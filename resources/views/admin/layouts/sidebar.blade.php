@@ -5,86 +5,41 @@
         <li class='sidebar-title'>Main Menu</li>
 
 
-
-        <li class="sidebar-item active ">
-
+        <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }} ">
             <a href="{{ route('admin-dashboard') }}" class='sidebar-link'>
                 <i data-feather="home" width="20"></i>
                 <span>Dashboard</span>
             </a>
-
-
         </li>
 
+        <li class='sidebar-title'>Facility Management</li>
 
 
-        <li class="sidebar-item  has-sub">
+        <li class="sidebar-item {{ request()->is('admin/category-facility*') ? 'active' : '' }}">
+            <a href="{{ route('category-facility.index') }}" class='sidebar-link'>
+                <i data-feather="triangle" width="20"></i>
+                <span>Facility Category</span>
+            </a>
+        </li>
 
-            <a href="#" class='sidebar-link'>
+        <li class="sidebar-item {{ request()->is('admin/facility*') ? 'active' : '' }}">
+            <a href="{{ route('facility.index') }}" class='sidebar-link'>
                 <i data-feather="triangle" width="20"></i>
                 <span>Facility</span>
             </a>
-
-
-            <ul class="submenu ">
-
-                <li class="sidebar-item  has-sub">
-
-                    <a href="#" class='sidebar-link'>
-                        <i data-feather="triangle" width="20"></i>
-                        <span>Category</span>
-                    </a>
-
-                    <ul class="submenu ">
-
-                        <li>
-                            <a href="#">List</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Create</a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-                <li class="sidebar-item  has-sub">
-
-                    <a href="#" class='sidebar-link'>
-                        <i data-feather="triangle" width="20"></i>
-                        <span>Facility</span>
-                    </a>
-
-                    <ul class="submenu ">
-
-                        <li>
-                            <a href="#">List</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Create</a>
-                        </li>
-
-                        <li>
-                            <a href="#">Map</a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-            </ul>
-
         </li>
 
-        <li class="sidebar-item  ">
+        <li class='sidebar-title'>Auth</li>
 
-            <a href="#" class='sidebar-link'>
+
+        <li class="sidebar-item  ">
+            <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            </form>
+            <button type="submit" class='sidebar-link border-0 bg-white'>
                 <i data-feather="user" width="20"></i>
                 <span>Logout</span>
-            </a>
-
+            </button>
         </li>
 
     </ul>

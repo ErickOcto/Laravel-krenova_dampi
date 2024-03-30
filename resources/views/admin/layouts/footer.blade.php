@@ -4,7 +4,7 @@
             <p>2022 &copy; Voler</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a href="https://saugi.me">Saugi</a></p>
+            <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a href="https://www.pplg.site" target="_blank">Cretech</a></p>
         </div>
     </div>
 </footer>
