@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,9 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route Admin
-Route::get('/admin', function() {
-    return view('admin.index');
+// Route Authenticated - User After Login
+Route::middleware(['auth','verified'])->group(function (){
+
+    // Admin Dashboard
+
+    Route::get('/admin', [DashboardController::class, 'adminDashboard'])->name('admin-dashboard');
+
+    // Officer Dashboard
 });
+
 
 require __DIR__.'/auth.php';
