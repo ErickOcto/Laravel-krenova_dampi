@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\FacilityCategoryController;
+use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +38,13 @@ Route::middleware(['auth','verified'])->group(function (){
     // Admin Dashboard
 
     Route::get('/admin', [DashboardController::class, 'adminDashboard'])->name('admin-dashboard');
+
+    // CRUD Admin Facility Category
+    Route::resource('admin/category-facility', FacilityCategoryController::class);
+    // CRUD Admin Facility
+    Route::resource('admin/facility', FacilityController::class);
+    // CRUD Project
+    Route::resource('admin/project', ProjectController::class);
 
     // Officer Dashboard
 });
