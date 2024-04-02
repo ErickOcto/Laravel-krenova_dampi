@@ -39,11 +39,11 @@
                             @enderror
                         </div>
                         <div class="form-group position-relative has-icon-left mt-2">
-                            {{-- @if (Route::has('password.request'))
+                            @if (Route::has('password.request'))
                                 <a class="float-end" href="{{ route('password.request') }}">
                                     {{ __('Forgot your password?') }}
                                 </a>
-                            @endif --}}
+                            @endif
                             <div class="clearfix">
                                 <label for="password">Password</label>
                             </div>

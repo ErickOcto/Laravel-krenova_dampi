@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('template/assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('template/assets/css/app.css') }}">
     <link rel="shortcut icon" href="{{ asset('template/assets/images/favicon.svg') }}" type="image/x-icon">
+    @stack('add-styles')
 </head>
 
 <body>
@@ -38,6 +39,7 @@
             @include('admin.layouts.footer')
         </div>
     </div>
+    @stack('add-scripts')
     <script src="{{ asset('template/assets/js/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('template/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('template/assets/js/app.js') }}"></script>
