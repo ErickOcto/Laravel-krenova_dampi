@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingController::class, 'index']);
+Route::get('/facility', [LandingController::class, 'facilities'])->name('landing-facility');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
