@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('lat');
             $table->longText('description');
             $table->string('imageUrl');
-            $table->foreignId('district_id');
-            $table->foreignId('village_id');
+            $table->foreignId('district_id')->nullable();
+            $table->foreignId('village_id')->nullable();
             $table->timestamps();
         });
     }

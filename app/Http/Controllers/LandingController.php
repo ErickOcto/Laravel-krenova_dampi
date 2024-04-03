@@ -12,7 +12,18 @@ class LandingController extends Controller
         ->join('facility_categories', 'facilities.facility_category_id', '=', 'facility_categories.id')
         ->select('facilities.*', 'facility_categories.name as category_name', 'facility_categories.iconUrl as iconUrl')
         ->get();
-        
+
+        return view('landing.index', compact('facilities'));
+    }
+
+    public function search(Request $request){
+        $facilities = DB::table('facilities')
+        ->where('facilities.name', 'LIKE', '%' . $request->search . '%')
+        ->orWhere('facility_categories.name', 'LIKE', '%' . $request->search . '%')
+        ->join('facility_categories', 'facilities.facility_category_id', '=', 'facility_categories.id')
+        ->select('facilities.*', 'facility_categories.name as category_name', 'facility_categories.iconUrl as iconUrl')
+        ->get();
+
         return view('landing.index', compact('facilities'));
     }
 

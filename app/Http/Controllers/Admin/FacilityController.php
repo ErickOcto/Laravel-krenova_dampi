@@ -41,7 +41,7 @@ class FacilityController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'facility_category_id' => 'required',
-            'imageUrl' => 'image',
+            'imageUrl' => 'image|required',
             'long' => 'required',
             'lat' => 'required',
         ]);

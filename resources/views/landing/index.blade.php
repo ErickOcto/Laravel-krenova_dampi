@@ -48,8 +48,8 @@
     <nav class="navbar navbar-expand-lg py-4">
       <div class="container-fluid">
 
-        <form class="d-flex ms-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex ms-auto" role="search" action="{{ route('landing-search') }}" method="GET">
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
 

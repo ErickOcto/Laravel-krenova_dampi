@@ -36,6 +36,21 @@
             </a>
         </li>
 
+        <li class="sidebar-item {{ request()->is('admin/project*') ? 'active' : '' }}">
+            <a href="{{ route('facility.index') }}" class='sidebar-link'>
+                <i data-feather="triangle" width="20"></i>
+                <span>Project</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item {{ request()->is('admin/social*') ? 'active' : '' }}">
+            <a href="{{ route('facility.index') }}" class='sidebar-link'>
+                <i data-feather="triangle" width="20"></i>
+                <span>Social</span>
+            </a>
+        </li>
+
+
         <li class='sidebar-title'>Auth</li>
 
 
