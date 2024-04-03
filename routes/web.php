@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
@@ -45,6 +46,8 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('admin/facility', FacilityController::class);
     // CRUD Project
     Route::resource('admin/project', ProjectController::class);
+    // CRUD User
+    Route::resource('admin/user', UserController::class);
 
     // Officer Dashboard
 });

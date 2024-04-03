@@ -59,7 +59,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <button class="btn btn-primary" aria-current="page" type="submit">Projek 🛠️</button>
+              <a href="#" class="nav-link" aria-current="page" type="submit">Projek 🛠️</a>
             </li>
             <li class="nav-item mx-3">
               <a href="{{ route('landing-facility') }}" class="nav-link" aria-current="page" type="submit">Fasilitas 🌏</a>
@@ -80,14 +80,24 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <!-- Start Leaflet JS -->
-  <script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    var marker = L.marker([51.5, -0.09]).addTo(map);
-    marker.bindPopup("<b>Halo!</b><br>Saya adalah marker.").openPopup();
-  </script>
+    <script>
+        var map = L.map('map').setView([-2.5489, 118.0149], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        @foreach ($facilities as $facility)
+            var icon = L.icon({
+                iconUrl: '{{ asset('/storage/iconUrl/'.$facility->iconUrl) }}',
+                iconSize: [38, 38],
+                iconAnchor: [19, 38],
+                popupAnchor: [0, -38]
+            });
+
+            var marker = L.marker([{{ $facility->lat }}, {{ $facility->long }}], { icon: icon }).addTo(map);
+            marker.bindTooltip('{{ $facility->name }}').openTooltip();
+        @endforeach
+    </script>
   <!-- End Leaflet JS -->
 </body>
 </html>
