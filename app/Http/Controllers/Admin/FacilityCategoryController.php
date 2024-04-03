@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FacilityCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FacilityCategoryController extends Controller
 {
@@ -12,7 +14,10 @@ class FacilityCategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.facilityCategory.index');
+        $categories = FacilityCategory::all();
+
+        //dd($categories);
+        return view('admin.facilityCategory.index', compact('categories'));
     }
 
     /**
@@ -28,7 +33,20 @@ class FacilityCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Hi';
+        $this->validate($request,[
+            'name' => 'required',
+            'iconUrl' => 'required|image',
+        ]);
+
+        $iconUrl = $request->file('iconUrl');
+        $iconUrl->storeAs('public/iconUrl', $iconUrl->hashName());
+
+        FacilityCategory::create([
+            'name' => $request->name,
+            'iconUrl' => $iconUrl->hashName(),
+        ]);
+
+        return redirect()->route('category-facility.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -44,7 +62,8 @@ class FacilityCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = FacilityCategory::findOrFail($id);
+        return view('admin.facilityCategory.edit', compact('category'));
     }
 
     /**
@@ -52,7 +71,27 @@ class FacilityCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'iconUrl' => 'image',
+        ]);
+        $category = FacilityCategory::findOrFail($id);
+
+        if($request->hasFile('iconUrl')){
+            Storage::delete('public/iconUrl/'.$category->iconUrl);
+            $iconUrl = $request->file('iconUrl');
+            $iconUrl->storeAs('public/iconUrl', $iconUrl->hashName());
+
+            $category->update([
+            'name' => $request->name,
+            'iconUrl' => $iconUrl->hashName(),
+            ]);
+        }else{
+            $category->update([
+            'name' => $request->name,
+            ]);
+        }
+        return redirect()->route('category-facility.index')->with(['success' => "Successfully updated"]);
     }
 
     /**
@@ -60,6 +99,7 @@ class FacilityCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        FacilityCategory::findOrFail($id)->delete();
+        return redirect()->back()->with(['message' => 'Berhasil menghapus']);
     }
 }
