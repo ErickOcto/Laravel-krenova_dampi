@@ -81,8 +81,7 @@
 
   <!-- Start Leaflet JS -->
     <script>
-        var indonesiaCoordinates = [-2.5489, 118.0149];
-        var map = L.map('map').setView(indonesiaCoordinates, 5);
+        var map = L.map('map').setView([-2.5489, 118.0149], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);

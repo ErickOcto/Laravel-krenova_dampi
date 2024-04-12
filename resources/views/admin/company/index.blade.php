@@ -8,12 +8,12 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Daftar Kategori Fasilitas</h3>
+                <h3>Daftar Perusahaan</h3>
                 <p class="text-subtitle text-muted"></p>
             </div>
             <div class="col-12 col-md-6 order-md-1 order-first">
                 <div class="text-end">
-                    <a href="{{ route('facility.create') }}" class="btn btn-primary">Tambah Data</a>
+                    <a href="{{ route('company.create') }}" class="btn btn-primary">Tambah Data</a>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                Daftar Fasilitas
+                Daftar Perusahaan
             </div>
             <div class="card-body">
                 <table class='table table-striped' id="table1">
@@ -30,37 +30,47 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Gambar</th>
-                            <th>Kategori</th>
-                            <th>Deskripsi</th>
+                            <th>Pemilik</th>
+                            <th>Telepon</th>
+                            <th>Lat</th>
+                            <th>Long</th>
+                            <th>Alamat / Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($facilities as $facility)
+                        @foreach ($companies as $company)
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $facility->name }}
+                                {{ $company->name }}
                             </td>
                             <td>
-                                <img src="{{ asset('/storage/facilities/'.$facility->imageUrl) }}" alt="{{ $facility->imageUrl }}" class="rounded" style="width: 150px">
+                                <img src="{{ asset('storage/company/'.$company->imageUrl)  }}" alt="{{ $company->imageUrl }}" style="max-width: 100px">
                             </td>
                             <td>
-                                <div class="badge bg-success">
-                                    {{ $facility->category_name }}
-                                </div>
+                                {{ $company->owner }}
                             </td>
                             <td>
-                                {{ $facility->description }}
+                                {{ $company->phone }}
+                            </td>
+                            <td>
+                                {{ $company->lat }}
+                            </td>
+                            <td>
+                                {{ $company->long }}
+                            </td>
+                            <td>
+                                {{  $company->description }}
                             </td>
                             <td>
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
-                                    <a href="{{ route('facility.edit', $facility->id) }}" class="btn btn-warning">
+                                    <a href="{{ route('company.edit', $company->id) }}" class="btn btn-warning">
                                         Edit
                                     </a>
-                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('facility.destroy', $facility->id) }}" method="POST">
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('company.destroy', $company->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">

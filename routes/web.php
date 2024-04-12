@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
@@ -20,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingController::class, 'index']);
+
+Route::get('/search', [LandingController::class, 'search'])->name('landing-search');
+
 Route::get('/facility', [LandingController::class, 'facilities'])->name('landing-facility');
 
 Route::get('/dashboard', function () {
@@ -45,6 +50,10 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('admin/facility', FacilityController::class);
     // CRUD Project
     Route::resource('admin/project', ProjectController::class);
+    // CRUD User
+    Route::resource('admin/user', UserController::class);
+    //CRUD Company
+    Route::resource('admin/company', CompanyController::class);
 
     // Officer Dashboard
 });

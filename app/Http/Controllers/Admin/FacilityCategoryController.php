@@ -99,7 +99,9 @@ class FacilityCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        FacilityCategory::findOrFail($id)->delete();
+        $category = FacilityCategory::findOrFail($id);
+        Storage::delete('public/iconUrl/'.$category->iconUrl);
+        $category->delete();
         return redirect()->back()->with(['message' => 'Berhasil menghapus']);
     }
 }

@@ -13,7 +13,7 @@
             </div>
             <div class="col-12 col-md-6 order-md-1 order-first">
                 <div class="text-end">
-                    <a href="{{ route('facility.create') }}" class="btn btn-primary">Tambah Data</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-primary">Tambah Data</a>
                 </div>
             </div>
         </div>
@@ -29,38 +29,38 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Gambar</th>
-                            <th>Kategori</th>
-                            <th>Deskripsi</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Role</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($facilities as $facility)
+                        @foreach ($users as $user)
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $facility->name }}
+                                {{ $user->name }}
                             </td>
                             <td>
-                                <img src="{{ asset('/storage/facilities/'.$facility->imageUrl) }}" alt="{{ $facility->imageUrl }}" class="rounded" style="width: 150px">
+                                {{ $user->email }}
                             </td>
                             <td>
-                                <div class="badge bg-success">
-                                    {{ $facility->category_name }}
+                                <div class="badge {{ $user->status ? 'bg-success' : 'bg-danger' }}">
+                                    {{ $user->status ? 'Aktif' : 'Tidak Aktif'}}
                                 </div>
                             </td>
                             <td>
-                                {{ $facility->description }}
+                                {{ $user->role == 1 ? 'Petugas' : 'Perusahaan' }}
                             </td>
                             <td>
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
-                                    <a href="{{ route('facility.edit', $facility->id) }}" class="btn btn-warning">
+                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">
                                         Edit
                                     </a>
-                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('facility.destroy', $facility->id) }}" method="POST">
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">
