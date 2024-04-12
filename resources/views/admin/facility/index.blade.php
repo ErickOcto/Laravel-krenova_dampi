@@ -60,7 +60,7 @@
                                     <a href="{{ route('facility.edit', $facility->id) }}" class="btn btn-warning">
                                         Edit
                                     </a>
-                                    <form action="{{ route('facility.destroy', $facility->id) }}" method="POST">
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('facility.destroy', $facility->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">

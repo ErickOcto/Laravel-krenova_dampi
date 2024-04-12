@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -51,6 +52,8 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('admin/project', ProjectController::class);
     // CRUD User
     Route::resource('admin/user', UserController::class);
+    //CRUD Company
+    Route::resource('admin/company', CompanyController::class);
 
     // Officer Dashboard
 });

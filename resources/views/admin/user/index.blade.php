@@ -29,7 +29,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Gambar</th>
+                            <th>Email</th>
                             <th>Status</th>
                             <th>Role</th>
                             <th>Aksi</th>
@@ -60,7 +60,7 @@
                                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">
                                         Edit
                                     </a>
-                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">

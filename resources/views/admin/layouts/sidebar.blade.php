@@ -36,8 +36,15 @@
             </a>
         </li>
 
+        <li class="sidebar-item {{ request()->is('admin/company*') ? 'active' : '' }}">
+            <a href="{{ route('company.index') }}" class='sidebar-link'>
+                <i data-feather="triangle" width="20"></i>
+                <span>Company</span>
+            </a>
+        </li>
+
         <li class="sidebar-item {{ request()->is('admin/project*') ? 'active' : '' }}">
-            <a href="{{ route('facility.index') }}" class='sidebar-link'>
+            <a href="{{ route('project.index') }}" class='sidebar-link'>
                 <i data-feather="triangle" width="20"></i>
                 <span>Project</span>
             </a>

@@ -130,8 +130,10 @@ class FacilityController extends Controller
      */
     public function destroy(string $id)
     {
-        Facility::findOrFail($id)->delete();
 
+        $facility = Facility::findOrFail($id);
+        Storage::delete('public/facilities/'.$facility->imageUrl);
+        $facility->delete();
         return redirect()->back()->with(['success', "Berhasil menghapus fasilitas"]);
     }
 }
