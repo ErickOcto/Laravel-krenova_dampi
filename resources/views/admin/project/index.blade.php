@@ -36,12 +36,75 @@
                             <th>Long</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Selesai</th>
-                            <th>Alamat</th>
                             <th>Biaya</th>
+                            <th>Alamat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($projects as $project)
+                        <tr>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->name }}
+                            </td>
+                            <td style="min-width: 200px">
+                                @if($project->status == "On Progress")
+                                    <div class="badge bg-warning">
+                                        Dalam Pengerjaan
+                                    </div>
+                                @elseif($project->status == "Completed")
+                                    <div class="badge bg-success">
+                                        Sukses
+                                    </div>
+                                @elseif($project->status == "Failed")
+                                    <div class="badge bg-danger">
+                                        Gagal
+                                    </div>
+                                @endif
+                            </td>
+                            <td style="min-width: 200px">
+                                <img src="{{ asset('storage/project/'.$project->imageUrl)  }}" alt="{{ $project->imageUrl }}" style="max-width: 100px">
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->companyName }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->lat }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->long }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->p_start }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->p_end }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->cost }}
+                            </td>
+                            <td style="min-width: 200px">
+                                {{ $project->address }}
+                            </td>
+                            <td style="min-width: 200px">
+                                <div class="d-flex align-items-center justify-content-center grid gap-2">
+                                    <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning">
+                                        Edit
+                                    </a>
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('project.destroy', $project->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

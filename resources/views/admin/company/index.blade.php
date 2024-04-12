@@ -29,8 +29,8 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Pemilik</th>
                             <th>Gambar</th>
+                            <th>Pemilik</th>
                             <th>Telepon</th>
                             <th>Lat</th>
                             <th>Long</th>
@@ -48,13 +48,13 @@
                                 {{ $company->name }}
                             </td>
                             <td>
+                                <img src="{{ asset('storage/company/'.$company->imageUrl)  }}" alt="{{ $company->imageUrl }}" style="max-width: 100px">
+                            </td>
+                            <td>
                                 {{ $company->owner }}
                             </td>
                             <td>
                                 {{ $company->phone }}
-                            </td>
-                            <td>
-                                <img src="{{ asset('storage/company/'.$company->imageUrl)  }}" alt="{{ $company->imageUrl }}" style="max-width: 100px">
                             </td>
                             <td>
                                 {{ $company->lat }}
