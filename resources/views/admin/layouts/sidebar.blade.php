@@ -57,13 +57,21 @@
             </a>
         </li>
 
+        <li class='sidebar-title'>Poverty Management</li>
+
+        <li class="sidebar-item {{ request()->is('admin/project*') ? 'active' : '' }}">
+            <a href="{{ route('project.index') }}" class='sidebar-link'>
+                <i data-feather="triangle" width="20"></i>
+                <span>Poverty</span>
+            </a>
+        </li>
 
         <li class='sidebar-title'>Auth</li>
 
 
         <li class="sidebar-item  ">
             <form action="{{ route('logout') }}" method="POST">
-            @csrf
+                @csrf
             </form>
             <button type="submit" class='sidebar-link border-0 bg-white'>
                 <i data-feather="user" width="20"></i>
