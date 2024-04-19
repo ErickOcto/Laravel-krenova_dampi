@@ -59,8 +59,8 @@
 
         <li class='sidebar-title'>Poverty Management</li>
 
-        <li class="sidebar-item {{ request()->is('admin/project*') ? 'active' : '' }}">
-            <a href="{{ route('project.index') }}" class='sidebar-link'>
+        <li class="sidebar-item {{ request()->is('admin/poverty*') ? 'active' : '' }}">
+            <a href="{{ route('poverty.index') }}" class='sidebar-link'>
                 <i data-feather="triangle" width="20"></i>
                 <span>Poverty</span>
             </a>
