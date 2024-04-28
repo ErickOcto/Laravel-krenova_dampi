@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('economies', function (Blueprint $table) {
-            $table->foreignId('civillian_id')->constrained('civillians')->onDelete('cascade');
-        });    
+        Schema::table('civilians', function (Blueprint $table) {
+            $table->renameColumn('total_children', 'total_dependents');
+        });
     }
 
     /**
@@ -21,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('civilians', function (Blueprint $table) {
+            $table->renameColumn('total_dependents', 'total_children');
+        });
     }
 };

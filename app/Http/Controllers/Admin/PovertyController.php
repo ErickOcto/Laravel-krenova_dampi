@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Civillian;
+use App\Models\Economy;
+use App\Models\House;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class PovertyController extends Controller
 {
@@ -14,13 +17,14 @@ class PovertyController extends Controller
      */
     public function index()
     {
-        $poverty = DB::table('civillians')
-        ->join('economies', 'civillians.economy_id', '=', 'economies.id')
-        ->join('houses', 'civillians.house_id', '=', 'houses.id')
-        ->get();
+        // $poverty = DB::table('civilians')
+        //     ->join('economies', 'civilians.economy_id', '=', 'economies.id')
+        //     ->join('houses', 'civilians.house_id', '=', 'houses.id')
+        //     ->get();
 
-        return view('admin.poverty.index',compact('poverty'));
+        $poverty = Civillian::with('house', 'economy')->get();
 
+        return view('admin.poverty.index', compact('poverty'));
     }
 
     /**
@@ -28,7 +32,7 @@ class PovertyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.poverty.create');
     }
 
     /**
@@ -36,7 +40,52 @@ class PovertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $civilianId = DB::table('civilians')->insertGetId([
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'marriage' => $request->marriage,
+            'total_dependents' => $request->total_dependents,
+            'total_familymember' => $request->total_familymember,
+            'description' => $request->description,
+            'created_at' => now()->timezone('Asia/Makassar'),
+            'updated_at' => now()->timezone('Asia/Makassar'),
+        ]);
+        
+        // Membuat objek House
+        $house = House::create([
+            'condition' => $request->condition,
+            'wide_area' => $request->wide_area,
+            'size_house' => $request->size_house,
+            'status' => 1,
+            'totalbedroom' => $request->totalbedroom,
+            'long' => $request->long,
+            'lat' => $request->lat,
+            'civilian_id' => $civilianId, // Menggunakan ID dari Civillian yang baru saja dibuat
+            'created_at' => now()->timezone('Asia/Makassar'),
+            'updated_at' => now()->timezone('Asia/Makassar'),
+        ]);
+        
+        // Membuat objek Economy
+        $economy = Economy::create([
+            'job_status' => $request->job_status,
+            'monthly_income' => $request->monthly_income,
+            'job_category' => $request->job_category,
+            'monthly_spending' => $request->monthly_spending,
+            'poverty_status' => $request->poverty_status,
+            'created_at' => now()->timezone('Asia/Makassar'),
+            'updated_at' => now()->timezone('Asia/Makassar'),
+            'civilian_id' => $civilianId, // Menggunakan ID dari Civillian yang baru saja dibuat
+        ]);
+        
+        // Menetapkan house_id dan economy_id di Civillian
+        DB::table('civilians')->where('id', $civilianId)->update([
+            'house_id' => $house->id,
+            'economy_id' => $economy->id,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -52,9 +101,11 @@ class PovertyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $poverty = Civillian::findOrFail($id);
+        $poverty->load('economy', 'house');
+    
+        return view('admin.poverty.edit', compact('poverty'));
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -71,3 +122,41 @@ class PovertyController extends Controller
         //
     }
 }
+// $civilian = Civillian::create([
+//     'name'    => $request->name,
+//     'nik'       => $request->nik,
+//     'birth_date'    => $request->birth_date,
+//     'gender'        => $request->gender,
+//     'marriage'      => $request->marriage,
+//     'total_dependents'   => $request->total_dependents,
+//     'total_familymember'        => $request->total_familymember,
+//     'description'       => $request->description,
+//     'house_id'      => $house->id,
+//     'economy_id'     => $economy->id,
+//     'created_at'    => Carbon::now()->timezone('Asia/Makassar'),
+//     'updated_at'    => Carbon::now()->timezone('Asia/Makassar'),
+// ]);
+
+// $house = House::create([
+//     'condition' => $request->condition,
+//     'wide_area' => $request->wide_area,
+//     'size_house'    => $request->size_house,
+//     'status'    => $request->status,
+//     'totalbedroom'  => $request->totalbedroom,
+//     'long'  => $request->long,
+//     'lat'   => $request->lat,
+//     'civilian_id' => $civilian->id,
+//     'created_at'    => Carbon::now()->timezone('Asia/Makassar'),
+//     'updated_at'    => Carbon::now()->timezone('Asia/Makassar'),
+// ]);
+
+// $economy = Economy::create([
+//     'job_status'    => $request->job_status,
+//     'monthly_income'    => $request->monthly_income,
+//     'job_category'  => $request->job_category,
+//     'monthly_spending'  => $request->monthly_spending,
+//     'poverty_status'    => $request->poverty_status,
+//     'created_at'    => Carbon::now()->timezone('Asia/Makassar'),
+//     'updated_at'    => Carbon::now()->timezone('Asia/Makassar'),
+//     'civilian_id'   => $civilian->id,
+// ]);

@@ -29,14 +29,38 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Gambar</th>
-                            <th>Kategori</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Pekerjaan</th>
+                            <th>Status Kemiskinan</th>
                             <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                       
+                        @foreach($poverty as $data)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $data->name }}</td>
+                            <td>{{ $data->gender }}</td>
+                            <td>{{ $data->economy->job_status }}</td>
+                            <td>{{ $data->economy->poverty_status }}</td>
+                            <td>{{ $data->description }}</td>
+                            <td style="min-width: 200px">
+                                <div class="d-flex align-items-center justify-content-center grid gap-2">
+                                    <a href="{{route('poverty.edit', $data->id)}}" class="btn btn-warning">
+                                        Edit
+                                    </a>
+                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
