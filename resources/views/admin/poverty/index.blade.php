@@ -45,19 +45,29 @@
                             <td>{{ $data->economy->job_status }}</td>
                             <td>{{ $data->economy->poverty_status }}</td>
                             <td>{{ $data->description }}</td>
-                            <td style="min-width: 200px">
+                            <td style="min-width: 100px">
+                                
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
-                                    <a href="{{route('poverty.edit', $data->id)}}" class="btn btn-warning">
-                                        Edit
-                                    </a>
-                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </div>
+                                        <a href="#" data-bs-toggle="dropdown"
+                                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                                            <div class="d-lg-inline-block">
+                                                <h6>Aksi</h6>
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a href="{{route('poverty.show', $data->id)}}" class="dropdown-item" href="#"><i data-feather="alert-circle"></i> Detail</a>
+
+                                            <a href="{{route('poverty.edit', $data->id)}}" class="dropdown-item" href="#"><i data-feather="edit"></i> Edit</a>
+                                            <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('poverty.destroy', $data->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="dropdown-item"><i data-feather="trash-2"></i>
+                                                    Hapus
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                    </div>
                             </td>
                         </tr>
                         @endforeach

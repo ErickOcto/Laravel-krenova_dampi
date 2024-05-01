@@ -52,7 +52,7 @@ class PovertyController extends Controller
             'created_at' => now()->timezone('Asia/Makassar'),
             'updated_at' => now()->timezone('Asia/Makassar'),
         ]);
-        
+
         // Membuat objek House
         $house = House::create([
             'condition' => $request->condition,
@@ -66,26 +66,26 @@ class PovertyController extends Controller
             'created_at' => now()->timezone('Asia/Makassar'),
             'updated_at' => now()->timezone('Asia/Makassar'),
         ]);
-        
+
         // Membuat objek Economy
         $economy = Economy::create([
             'job_status' => $request->job_status,
-            'monthly_income' => $request->monthly_income,
+            'monthly_income' => str_replace('.', '', $request->monthly_income),
             'job_category' => $request->job_category,
-            'monthly_spending' => $request->monthly_spending,
+            'monthly_spending' => str_replace('.', '', $request->monthly_spending),
             'poverty_status' => $request->poverty_status,
             'created_at' => now()->timezone('Asia/Makassar'),
             'updated_at' => now()->timezone('Asia/Makassar'),
             'civilian_id' => $civilianId, // Menggunakan ID dari Civillian yang baru saja dibuat
         ]);
-        
+
         // Menetapkan house_id dan economy_id di Civillian
         DB::table('civilians')->where('id', $civilianId)->update([
             'house_id' => $house->id,
             'economy_id' => $economy->id,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('poverty.index');
     }
 
     /**
@@ -93,7 +93,10 @@ class PovertyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $poverty = Civillian::findOrFail($id);
+        $poverty->load('economy', 'house');
+
+        return view('admin.poverty.show', compact('poverty'));
     }
 
     /**
@@ -103,15 +106,47 @@ class PovertyController extends Controller
     {
         $poverty = Civillian::findOrFail($id);
         $poverty->load('economy', 'house');
-    
+
         return view('admin.poverty.edit', compact('poverty'));
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Update data di tabel Civilians
+        DB::table('civilians')->where('id', $id)->update([
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'marriage' => $request->marriage,
+            'total_dependents' => $request->total_dependents,
+            'total_familymember' => $request->total_familymember,
+            'description' => $request->description,
+            'updated_at' => now()->timezone('Asia/Makassar'),
+        ]);
+
+        // Update data di tabel House
+        $house = House::where('civilian_id', $id)->first();
+        $house->condition = $request->condition;
+        $house->wide_area = $request->wide_area;
+        $house->size_house = $request->size_house;
+        $house->totalbedroom = $request->totalbedroom;
+        $house->long = $request->long;
+        $house->lat = $request->lat;
+        $house->save();
+
+        // Update data di tabel Economy
+        $economy = Economy::where('civilian_id', $id)->first();
+        $economy->job_status = $request->job_status;
+        $economy->monthly_income = str_replace('.', '', $request->monthly_income);
+        $economy->job_category = $request->job_category;
+        $economy->monthly_spending = str_replace('.', '', $request->monthly_spending);
+        $economy->poverty_status = $request->poverty_status;
+        $economy->save();
+
+        return redirect()->back()->with(['success', "Berhasil Mengubah data Penduduk"]);
     }
 
     /**
@@ -119,7 +154,11 @@ class PovertyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $poverty = Civillian::findOrFail($id);
+
+        $poverty->delete();
+
+        return redirect()->back();
     }
 }
 // $civilian = Civillian::create([

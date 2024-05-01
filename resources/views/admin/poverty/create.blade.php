@@ -156,11 +156,14 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="first-name-column">Pendapatan Bulanan</label>
+                                        <label for="pendapatan-bulanan-column">Pendapatan Bulanan</label>
                                         <div class="input-group">
-                                            <input type="number" id="first-name-column" name="monthly_income" class="form-control" placeholder="Masukkan Rata Rata Pendapatan Bulanan" aria-describedby="basic-addon1" oninput="formatRupiah(this)">
+                                            <input type="text" id="pendapatan-bulanan-column"
+                                                name="monthly_income"
+                                                class="form-control"
+                                                placeholder="Masukkan Rata Rata Pendapatan Bulanan"
+                                                aria-describedby="basic-addon1" onkeyup="formatRupiah(this)">
                                             <span class="input-group-text" id="basic-addon1">Rp</span>
-
                                         </div>
                                         @error('monthly_income')
                                             <strong class="alert alert-danger">{{ $message }}</strong>
@@ -168,11 +171,14 @@
                                     </div>
 
                                     <div class="col-md-6 col-12">
-                                        <label for="first-name-column">Pengeluaran Bulanan</label>
+                                        <label for="pengeluaran-bulanan-column">Pengeluaran Bulanan</label>
                                         <div class="input-group">
-                                            <input type="number" id="first-name-column" name="monthly_spending" class="form-control" placeholder="Masukkan Rata Rata Pengeluaran Bulanan" aria-describedby="basic-addon1" oninput="formatRupiah(this)">
-                                            <span class="input-group-text" id="basic-addon1">Rp</span>
-
+                                            <input type="text" id="pengeluaran-bulanan-column"
+                                                name="monthly_spending"
+                                                class="form-control"
+                                                placeholder="Masukkan Rata Rata Pengeluaran Bulanan"
+                                                aria-describedby="basic-addon2" onkeyup="formatRupiah(this)">
+                                            <span class="input-group-text" id="basic-addon2">Rp</span>
                                         </div>
                                         @error('monthly_spending')
                                             <strong class="alert alert-danger">{{ $message }}</strong>
@@ -291,6 +297,21 @@
 
 @push('add-scripts')
 <script>
+     function formatRupiah(angka) {
+            var number_string = angka.value.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{1,3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            angka.value = rupiah;
+        }
     // function formatRupiah(angka) {
     //     var number_string = angka.value.replace(/[^,\d]/g, "").toString(),
     //         split = number_string.split(","),
