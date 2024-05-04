@@ -59,13 +59,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <a href="#" class="nav-link" aria-current="page" type="submit">Projek 🛠️</a>
+              <a href="{{ route('landing-projects') }}" class="nav-link">Projek 🛠️</a>
             </li>
             <li class="nav-item mx-3">
-              <a href="{{ route('landing-facility') }}" class="nav-link" aria-current="page" type="submit">Fasilitas 🌏</a>
+              <a href="{{ route('landing-facility') }}" class="nav-link">Fasilitas 🌏</a>
             </li>
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Sosial 📊</button>
+              <a class="nav-link">TPS 🚮</a>
             </li>
           </ul>
         </div>

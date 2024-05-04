@@ -48,8 +48,8 @@
     <nav class="navbar navbar-expand-lg py-4">
       <div class="container-fluid">
 
-        <form class="d-flex ms-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex ms-auto" role="search" action="{{ route('landing-search') }}" method="GET">
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
 
@@ -59,13 +59,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Projek 🛠️</button>
+              <button class="btn btn-primary" aria-current="page" type="submit">Projek 🛠️</button>
             </li>
             <li class="nav-item mx-3">
-              <button class="btn btn-primary" aria-current="page" type="submit">Fasilitas 🌏</button>
+              <a class="nav-link" aria-current="page" href="{{ route('landing-facility') }}">Fasilitas 🌏</a>
             </li>
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Sosial 📊</button>
+              <a class="nav-link" aria-current="page">TPS 🚮</a>
             </li>
           </ul>
         </div>
@@ -76,8 +76,29 @@
 
   <div id="map"></div>
 
+  <!-- Modal -->
+<div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="projectName">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <img id="projectImage" src="" class="img-fluid" alt="project Image">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Start Leaflet JS -->
     <script>
@@ -88,14 +109,20 @@
 
         @foreach ($projects as $project)
             var icon = L.icon({
-                iconUrl: '{{ asset('/storage/iconUrl/'.$project->iconUrl) }}',
+                iconUrl: '{{ asset('images/pupr_warning.png') }}',
                 iconSize: [38, 38],
                 iconAnchor: [19, 38],
                 popupAnchor: [0, -38]
             });
 
             var marker = L.marker([{{ $project->lat }}, {{ $project->long }}], { icon: icon }).addTo(map);
-            marker.bindTooltip('{{ $project->name }}').openTooltip();
+            marker.projectName = '{{ $project->name }}';
+            marker.projectImageUrl = '{{ asset('/storage/project/'.$project->imageUrl) }}';
+            marker.on('click', function(e){
+                $('#projectName').text(this.projectName);
+                $('#projectImage').attr('src', this.projectImageUrl);
+                $('#projectModal').modal('show');
+            });
         @endforeach
     </script>
   <!-- End Leaflet JS -->

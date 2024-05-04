@@ -48,8 +48,8 @@
     <nav class="navbar navbar-expand-lg py-4">
       <div class="container-fluid">
 
-        <form class="d-flex ms-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex ms-auto" role="search" action="{{ route('landing-search') }}" method="GET">
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
 
@@ -59,13 +59,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Projek 🛠️</button>
+              <a class="nav-link" href="{{ route('landing-projects') }}" aria-current="page">Projek 🛠️</a>
             </li>
             <li class="nav-item mx-3">
               <button class="btn btn-primary" aria-current="page" type="submit">Fasilitas 🌏</button>
             </li>
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Sosial 📊</button>
+              <a class="nav-link" aria-current="page" >TPS 🚮</a>
             </li>
           </ul>
         </div>
