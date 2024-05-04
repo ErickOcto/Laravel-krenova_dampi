@@ -18,9 +18,6 @@
                                     <p>{{ $projectOnProgress }}</p>
                                 </div>
                             </div>
-                            <div class="chart-wrapper">
-                                <canvas id="canvas1" style="height:100px !important"></canvas>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,9 +31,6 @@
                                 <div class="card-right d-flex align-items-center">
                                     <p>{{ $projectFinished }}</p>
                                 </div>
-                            </div>
-                            <div class="chart-wrapper">
-                                <canvas id="canvas2" style="height:100px !important"></canvas>
                             </div>
                         </div>
                     </div>
@@ -52,9 +46,6 @@
                                     <p>Rp {{ $projectCost }}</p>
                                 </div>
                             </div>
-                            <div class="chart-wrapper">
-                                <canvas id="canvas3" style="height:100px !important"></canvas>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,9 +59,6 @@
                                 <div class="card-right d-flex align-items-center">
                                     <p>{{ $costMonth }}</p>
                                 </div>
-                            </div>
-                            <div class="chart-wrapper">
-                                <canvas id="canvas4" style="height:100px !important"></canvas>
                             </div>
                         </div>
                     </div>

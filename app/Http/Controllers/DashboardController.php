@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,25 @@ class DashboardController extends Controller
         $projectCost = formatCost($cost);
 
         $costMonth = formatCost($costMonth);
+
+
+        $projects = Project::select(DB::raw('YEAR(project_start) as year, MONTH(project_start) as month, SUM(cost) as total_cost'))
+                        ->groupBy(DB::raw('YEAR(project_start)'), DB::raw('MONTH(project_start)'))
+                        ->get();
+        
+        $labels = [];
+        $data = [];
+        
+        foreach($projects as $project) {
+            $monthYear = date('M Y', mktime(0, 0, 0, $project->month, 1, $project->year));
+            $labels[] = $monthYear;
+            $data[] = $project->total_cost;
+        }
+    
+        return view('project.cost_per_month', [
+            'labels' => json_encode($labels),
+            'data' => json_encode($data)
+        ]);
         return view('admin.index', compact('projectOnProgress', 'projectFinished', 'projectCost', 'costMonth'));
     }
 }
