@@ -37,7 +37,12 @@ class LandingController extends Controller
     }
 
     public function projects(){
-        $projects = DB::table('projects')->get();
+        $projects = DB::table('projects')
+        ->join('companies', 'companies.id', '=', 'projects.company_id')
+        ->select('projects.*', 'companies.name as companyName', 'companies.imageUrl as companyImage')
+        ->get();
+
+        //dd($projects);
         return view('landing.project', compact('projects'));
     }
 }

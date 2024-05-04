@@ -91,26 +91,36 @@
             </div>
             <div class="col-12 mt-5">
                 <div class="d-flex justify-content-between">
-                    <p>Lokasi Projek : </p>
-                    <p id="projectAddress" class="fw-bold"></p>
+                    <p class="text-secondary fw-regular">Lokasi Projek : </p>
+                    <p id="projectAddress" class="fw-bold text-end" style="max-width: 50%"></p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Biaya Projek : </p>
-                    <p id="projectCost" class="fw-bold"></p>
+                    <p class="text-secondary fw-regular">Biaya Projek : </p>
+                    <p id="projectCost" class="fw-bold text-end" style="max-width: 50%"></p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Status Projek : </p>
-                    <p id="projectStatus" class="fw-bold"></p>
+                    <p class="text-secondary fw-regular">Status Projek : </p>
+                    <p id="projectStatus" class="fw-bold text-end" style="max-width: 50%"></p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Tanggal Mulai Projek : </p>
-                    <p id="p-start" class="fw-bold"></p>
+                    <p class="text-secondary fw-regular">Tanggal Mulai Projek : </p>
+                    <p id="p-start" class="fw-bold text-end" style="max-width: 50%"></p>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p>Estimasi Selesai Projek : </p>
+                    <p class="text-secondary fw-regular">Estimasi Selesai Projek : </p>
                     <p id="p-end" class="fw-bold"></p>
                 </div>
-                <p></p>
+                <div class="d-flex justify-content-between">
+                    <p class="text-secondary fw-regular">Vendor : </p>
+                    <div class="text-end" style="max-width: 50%">
+                        <p id="companyName" class="fw-bold"></p>
+                        <img id="companyImage" src="" class="img-fluid" alt="company Image">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-5">
+                    <p class="text-secondary fw-regular">Deskripsi : </p>
+                    <p id="projectDesc" class="fw-bold"></p>
+                </div>
             </div>
         </div>
       </div>
@@ -143,9 +153,12 @@
             marker.p_s = '{{ \Carbon\Carbon::parse($project->p_start)->format('d/m/Y') }}';
             marker.p_e = '{{ \Carbon\Carbon::parse($project->p_end)->format('d/m/Y') }}';
             marker.projectAddress = '{{ $project->address }}';
-            marker.projectCost = '{{ $project->cost }}';
+            marker.projectCost = 'Rp {{ number_format($project->cost) }}';
             marker.projectStatus = '{{ $project->status }}';
+            marker.companyName = '{{ $project->companyName }}';
+            marker.projectDesc = '{{ $project->description }}';
             marker.projectImageUrl = '{{ asset('/storage/project/'.$project->imageUrl) }}';
+            marker.companyImage = '{{ asset('/storage/company/'.$project->companyImage) }}';
             marker.on('click', function(e){
                 $('#projectName').text(this.projectName);
                 $('#projectAddress').text(this.projectAddress);
@@ -153,7 +166,10 @@
                 $('#projectCost').text(this.projectCost);
                 $('#p-start').text(this.p_s);
                 $('#p-end').text(this.p_e);
+                $('#companyName').text(this.companyName);
+                $('#projectDesc').text(this.projectDesc);
                 $('#projectImage').attr('src', this.projectImageUrl);
+                $('#companyImage').attr('src', this.companyImage);
                 $('#projectModal').modal('show');
             });
         @endforeach
