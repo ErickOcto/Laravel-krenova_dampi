@@ -37,6 +37,7 @@ class LandingController extends Controller
     }
 
     public function projects(){
-        return view('landing.project');
+        $projects = DB::table('projects')->get();
+        return view('landing.project', compact('projects'));
     }
 }

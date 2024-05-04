@@ -28,6 +28,8 @@ Route::get('/search', [LandingController::class, 'search'])->name('landing-searc
 
 Route::get('/facility', [LandingController::class, 'facilities'])->name('landing-facility');
 
+Route::get('/project', [LandingController::class, 'projects'])->name('landing-projects');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

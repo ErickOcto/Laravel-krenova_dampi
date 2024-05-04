@@ -59,13 +59,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <a href="#" class="nav-link" aria-current="page" type="submit">Projek 🛠️</a>
+              <a href="{{ route('landing-projects') }}" class="nav-link">Projek 🛠️</a>
             </li>
             <li class="nav-item mx-3">
-              <a href="{{ route('landing-facility') }}" class="nav-link" aria-current="page" type="submit">Fasilitas 🌏</a>
+              <a href="{{ route('landing-facility') }}" class="nav-link">Fasilitas 🌏</a>
             </li>
             <li class="nav-item mx-3">
-              <button class="nav-link" aria-current="page" type="submit">Sosial 📊</button>
+              <a class="nav-link">TPS 🚮</a>
             </li>
           </ul>
         </div>
@@ -76,8 +76,30 @@
 
   <div id="map"></div>
 
+<!-- Modal -->
+<div class="modal fade" id="facilityModal" tabindex="-1" aria-labelledby="facilityModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="facilityName">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <img id="facilityImage" src="" class="img-fluid" alt="project Image">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Start Leaflet JS -->
     <script>
@@ -95,7 +117,13 @@
             });
 
             var marker = L.marker([{{ $facility->lat }}, {{ $facility->long }}], { icon: icon }).addTo(map);
-            marker.bindTooltip('{{ $facility->name }}').openTooltip();
+            marker.facilityName = '{{ $facility->name }}';
+            marker.facilityImageUrl = '{{ asset('/storage/facilities/'.$facility->imageUrl) }}';
+            marker.on('click', function(e){
+                $('#facilityName').text(this.facilityName);
+                $('#facilityImage').attr('src', this.facilityImageUrl);
+                $('#facilityModal').modal('show');
+            });
         @endforeach
     </script>
   <!-- End Leaflet JS -->
