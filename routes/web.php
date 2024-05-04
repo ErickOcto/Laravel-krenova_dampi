@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\PovertyController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\DashboardController;
@@ -54,6 +55,11 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('admin/user', UserController::class);
     //CRUD Company
     Route::resource('admin/company', CompanyController::class);
+
+
+    //CRUD Poverty
+    Route::resource('admin/poverty', PovertyController::class);
+
 
     // Officer Dashboard
 });
