@@ -89,6 +89,29 @@
             <div class="col-12">
                 <img id="projectImage" src="" class="img-fluid" alt="project Image">
             </div>
+            <div class="col-12 mt-5">
+                <div class="d-flex justify-content-between">
+                    <p>Lokasi Projek : </p>
+                    <p id="projectAddress" class="fw-bold"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Biaya Projek : </p>
+                    <p id="projectCost" class="fw-bold"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Status Projek : </p>
+                    <p id="projectStatus" class="fw-bold"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Tanggal Mulai Projek : </p>
+                    <p id="p-start" class="fw-bold"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Estimasi Selesai Projek : </p>
+                    <p id="p-end" class="fw-bold"></p>
+                </div>
+                <p></p>
+            </div>
         </div>
       </div>
     </div>
@@ -117,9 +140,19 @@
 
             var marker = L.marker([{{ $project->lat }}, {{ $project->long }}], { icon: icon }).addTo(map);
             marker.projectName = '{{ $project->name }}';
+            marker.p_s = '{{ \Carbon\Carbon::parse($project->p_start)->format('d/m/Y') }}';
+            marker.p_e = '{{ \Carbon\Carbon::parse($project->p_end)->format('d/m/Y') }}';
+            marker.projectAddress = '{{ $project->address }}';
+            marker.projectCost = '{{ $project->cost }}';
+            marker.projectStatus = '{{ $project->status }}';
             marker.projectImageUrl = '{{ asset('/storage/project/'.$project->imageUrl) }}';
             marker.on('click', function(e){
                 $('#projectName').text(this.projectName);
+                $('#projectAddress').text(this.projectAddress);
+                $('#projectStatus').text(this.projectStatus);
+                $('#projectCost').text(this.projectCost);
+                $('#p-start').text(this.p_s);
+                $('#p-end').text(this.p_e);
                 $('#projectImage').attr('src', this.projectImageUrl);
                 $('#projectModal').modal('show');
             });
