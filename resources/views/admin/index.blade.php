@@ -4,7 +4,7 @@
 <div class="main-content container-fluid">
     <div class="page-title">
         <h3>Dashboard</h3>
-        <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
+        <p class="text-subtitle text-muted">Dashboard statistik</p>
     </div>
     <section class="section">
         <div class="row mb-2">
@@ -13,9 +13,9 @@
                     <div class="card-body p-0">
                         <div class="d-flex flex-column">
                             <div class='px-3 py-3 d-flex justify-content-between'>
-                                <h3 class='card-title'>Project</h3>
+                                <h3 class='card-title'>Projek On Progress</h3>
                                 <div class="card-right d-flex align-items-center">
-                                    <p>10</p>
+                                    <p>{{ $projectOnProgress }}</p>
                                 </div>
                             </div>
                             <div class="chart-wrapper">
@@ -30,9 +30,9 @@
                     <div class="card-body p-0">
                         <div class="d-flex flex-column">
                             <div class='px-3 py-3 d-flex justify-content-between'>
-                                <h3 class='card-title'>Facility</h3>
+                                <h3 class='card-title'>Projek Diselesaikan</h3>
                                 <div class="card-right d-flex align-items-center">
-                                    <p>99</p>
+                                    <p>{{ $projectFinished }}</p>
                                 </div>
                             </div>
                             <div class="chart-wrapper">
@@ -47,9 +47,9 @@
                     <div class="card-body p-0">
                         <div class="d-flex flex-column">
                             <div class='px-3 py-3 d-flex justify-content-between'>
-                                <h3 class='card-title'>Cost</h3>
+                                <h3 class='card-title'>Total Biaya</h3>
                                 <div class="card-right d-flex align-items-center">
-                                    <p>Rp 999.1m</p>
+                                    <p>Rp {{ $projectCost }}</p>
                                 </div>
                             </div>
                             <div class="chart-wrapper">
@@ -64,9 +64,9 @@
                     <div class="card-body p-0">
                         <div class="d-flex flex-column">
                             <div class='px-3 py-3 d-flex justify-content-between'>
-                                <h3 class='card-title'>User</h3>
+                                <h3 class='card-title'> Biaya Bulan Ini</h3>
                                 <div class="card-right d-flex align-items-center">
-                                    <p>4 </p>
+                                    <p>{{ $costMonth }}</p>
                                 </div>
                             </div>
                             <div class="chart-wrapper">
