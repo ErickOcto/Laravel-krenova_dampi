@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\PovertyController;
@@ -39,7 +40,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route Authenticated - User After Login
-Route::middleware(['auth','verified'])->group(function (){
+Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin Dashboard
 
@@ -57,12 +58,19 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('admin/company', CompanyController::class);
 
 
-    //CRUD Poverty
-    Route::resource('admin/poverty', PovertyController::class);
 
+    Route::middleware('admin')->group(function () {
+        // Dashboard Poverty(kemiskinan)
+        Route::get('admin/poverty', [AdminDashboardController::class, 'povertyDashboard'])->name('poverty-dashboard');
+    
+        //CRUD Poverty
+        Route::resource('admin/management/poverty', PovertyController::class);
+    });
 
     // Officer Dashboard
 });
 
+// Route Admin Poverty 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

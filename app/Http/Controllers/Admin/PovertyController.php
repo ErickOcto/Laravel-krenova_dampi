@@ -93,8 +93,12 @@ class PovertyController extends Controller
      */
     public function show(string $id)
     {
-        $poverty = Civillian::findOrFail($id);
-        $poverty->load('economy', 'house');
+        $poverty = DB::table('civilians')
+        ->where('civilians.id', $id) // Tambahkan 'civilians.' untuk membuat kolom 'id' menjadi tidak ambigu
+        ->join('houses', 'civilians.house_id', '=', 'houses.id')
+        ->join('economies', 'civilians.economy_id', '=', 'economies.id')
+        ->select('civilians.*', 'houses.lat as lat', 'houses.long as long', 'economies.*')
+        ->first(); // Menggunakan first() karena hanya mengambil satu record
 
         return view('admin.poverty.show', compact('poverty'));
     }

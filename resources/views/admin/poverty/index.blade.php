@@ -42,10 +42,10 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->gender }}</td>
-                            <td>{{ $data->economy->job_status }}</td>
-                            <td>{{ $data->economy->poverty_status }}</td>
+                            <td>{{ $data->economy->job_category ?? '' }}</td>
+                            <td>{{ $data->economy->poverty_status ?? '' }}</td>
                             <td>{{ $data->description }}</td>
-                            <td style="min-width: 100px">
+                            <td style="min-width: 50px">
                                 
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
                                         <a href="#" data-bs-toggle="dropdown"
@@ -90,13 +90,9 @@
     <script>
         //message with toastr
         @if(session()->has('success'))
-
             toastr.success('{{ session('success') }}', 'BERHASIL!');
-
         @elseif(session()->has('error'))
-
             toastr.error('{{ session('error') }}', 'GAGAL!');
-
         @endif
     </script>
 @endpush
