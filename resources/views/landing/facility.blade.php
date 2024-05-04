@@ -76,9 +76,29 @@
 
   <div id="map"></div>
 
+  <!-- Modal -->
+<div class="modal fade" id="facilityModal" tabindex="-1" aria-labelledby="facilityModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="facilityName">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <img id="facilityImage" src="" class="img-fluid" alt="project Image">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Start Leaflet JS -->
     <script>
         var map = L.map('map').setView([-2.5489, 118.0149], 5);
@@ -95,7 +115,13 @@
             });
 
             var marker = L.marker([{{ $facility->lat }}, {{ $facility->long }}], { icon: icon }).addTo(map);
-            marker.bindTooltip('{{ $facility->name }}').openTooltip();
+            marker.facilityName = '{{ $facility->name }}';
+            marker.facilityImageUrl = '{{ asset('/storage/facilities/'.$facility->imageUrl) }}';
+            marker.on('click', function(e){
+                $('#facilityName').text(this.facilityName);
+                $('#facilityImage').attr('src', this.facilityImageUrl);
+                $('#facilityModal').modal('show');
+            });
         @endforeach
     </script>
   <!-- End Leaflet JS -->
