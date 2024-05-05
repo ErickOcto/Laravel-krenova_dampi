@@ -29,14 +29,14 @@
 
         <li class="sidebar-item {{ request()->is('admin/category-facility*') ? 'active' : '' }}">
             <a href="{{ route('category-facility.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
+                <i data-feather="flag" width="20"></i>
                 <span>Facility Category</span>
             </a>
         </li>
 
         <li class="sidebar-item {{ request()->is('admin/facility*') ? 'active' : '' }}">
             <a href="{{ route('facility.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
+                <i data-feather="flag" width="20"></i>
                 <span>Facility</span>
             </a>
         </li>
@@ -50,22 +50,15 @@
 
         <li class="sidebar-item {{ request()->is('admin/company*') ? 'active' : '' }}">
             <a href="{{ route('company.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
+                <i data-feather="briefcase" width="20"></i>
                 <span>Company</span>
             </a>
         </li>
 
         <li class="sidebar-item {{ request()->is('admin/project*') ? 'active' : '' }}">
             <a href="{{ route('project.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
+                <i data-feather="trello" width="20"></i>
                 <span>Project</span>
-            </a>
-        </li>
-
-        <li class="sidebar-item {{ request()->is('admin/social*') ? 'active' : '' }}">
-            <a href="{{ route('facility.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
-                <span>Social</span>
             </a>
         </li>
         @endif
@@ -81,7 +74,6 @@
         @endif
 
         <li class='sidebar-title'>Auth</li>
-
 
         <li class="sidebar-item  ">
             <form action="{{ route('logout') }}" method="POST">
