@@ -61,9 +61,10 @@
                                             <label for="first-name-column">Pilih Role</label>
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="role">
-                                                    <option value="1">Petugas</option>
-                                                    <option value="2">Perusahaan</option>
-                                                    <option value="0">Admin</option>
+                                                    <option value="0">Super Admin</option>
+                                                    <option value="1">Petugas Sosial</option>
+                                                    <option value="2">Petugas Projek</option>
+                                                    <option value="3">Petugas Fasilitas</option>
                                                 </select>
                                             </fieldset>
                                         </div>
