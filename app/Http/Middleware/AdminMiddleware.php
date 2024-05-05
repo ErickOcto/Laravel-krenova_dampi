@@ -15,9 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $request->user()->role != 1) {
+        if ($request->user() && !in_array($request->user()->role, [0, 1])) {
             return redirect()->route('admin-dashboard')->with('error', 'Unauthorized access');
         }
+    
 
         return $next($request);
     }
