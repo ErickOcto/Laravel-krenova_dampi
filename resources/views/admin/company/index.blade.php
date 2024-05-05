@@ -21,7 +21,7 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                Daftar Perusahaan
+                Daftar Perusahaan ynag ada di sistem
             </div>
             <div class="card-body">
                 <table class='table table-striped' id="table1">

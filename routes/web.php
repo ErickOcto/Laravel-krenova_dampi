@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\FacilityCategoryController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\PovertyController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\RewardController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
@@ -62,6 +63,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('admin/user', UserController::class);
     //CRUD Company
     Route::resource('admin/company', CompanyController::class);
+    //CRUD Reward
+    Route::get('admin/rewardCategory', [RewardController::class, 'rewardCategory'])->name('rewardCategory.index');
+    Route::post('admin/rewardCategory/add', [RewardController::class, 'addRewardCategory'])->name('rewardCategory.create');
+    Route::delete('admin/rewardCategory/delete/{id}', [RewardController::class, 'deleteRewardCategory'])->name('rewardCategory.delete');
+
+    //CRUD Reward Category
+    Route::get('admin/award', [RewardController::class, 'reward'])->name('reward.index');
+    Route::get('admin/award/detail/{id}', [RewardController::class, 'rewardDetail'])->name('reward.show');
+    Route::post('admin/award/add', [RewardController::class, 'addReward'])->name('reward.create');
+    Route::delete('admin/award/delete/{id}', [RewardController::class, 'deletereward'])->name('reward.delete');
 
 
 

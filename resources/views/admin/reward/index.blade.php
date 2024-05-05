@@ -11,11 +11,6 @@
                 <h3>Daftar Kategori Fasilitas</h3>
                 <p class="text-subtitle text-muted"></p>
             </div>
-            <div class="col-12 col-md-6 order-md-1 order-first">
-                <div class="text-end">
-                    <a href="{{ route('facility.create') }}" class="btn btn-primary">Tambah Data</a>
-                </div>
-            </div>
         </div>
     </div>
     <section class="section">
@@ -29,9 +24,6 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Gambar</th>
-                            <th>Kategori</th>
-                            <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -45,28 +37,10 @@
                                 {{ $facility->name }}
                             </td>
                             <td>
-                                <img src="{{ asset('/storage/facilities/'.$facility->imageUrl) }}" alt="{{ $facility->imageUrl }}" class="rounded" style="width: 150px">
-                            </td>
-                            <td>
-                                <div class="badge bg-success">
-                                    {{ $facility->category_name }}
-                                </div>
-                            </td>
-                            <td>
-                                {{ $facility->description }}
-                            </td>
-                            <td>
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
-                                    <a href="{{ route('facility.edit', $facility->id) }}" class="btn btn-warning">
-                                        Edit
+                                    <a href="{{ route('reward.show', $facility->id) }}" class="btn btn-info">
+                                        Detail Penghargaan
                                     </a>
-                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('facility.destroy', $facility->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            Hapus
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>

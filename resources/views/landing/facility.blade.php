@@ -90,6 +90,7 @@
         <div class="row">
             <div class="col-12">
                 <img id="facilityImage" src="" class="img-fluid" alt="project Image">
+                <p id="locationCoordinate"></p>
             </div>
         </div>
       </div>
@@ -118,9 +119,11 @@
 
             var marker = L.marker([{{ $facility->lat }}, {{ $facility->long }}], { icon: icon }).addTo(map);
             marker.facilityName = '{{ $facility->name }}';
+            marker.locationCoordinate = 'https://www.google.com/maps?q={{ $facility->lat }},{{ $facility->long }}';
             marker.facilityImageUrl = '{{ asset('/storage/facilities/'.$facility->imageUrl) }}';
             marker.on('click', function(e){
                 $('#facilityName').text(this.facilityName);
+                $('#locationCoordinate').html('<a href="' + this.locationCoordinate + '" target="_blank">Lihat Lokasi di Google Maps</a>');
                 $('#facilityImage').attr('src', this.facilityImageUrl);
                 $('#facilityModal').modal('show');
             });

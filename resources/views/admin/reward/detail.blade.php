@@ -8,17 +8,47 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Daftar Kategori Fasilitas</h3>
+                <h3>Daftar Penghargaan {{ $facility->name }}</h3>
                 <p class="text-subtitle text-muted"></p>
-            </div>
-            <div class="col-12 col-md-6 order-md-1 order-first">
-                <div class="text-end">
-                    <a href="{{ route('facility.create') }}" class="btn btn-primary">Tambah Data</a>
-                </div>
             </div>
         </div>
     </div>
     <section class="section">
+        <div class="card">
+            <form action="{{ route('reward.create') }}" method="POST" class="row m-2">
+                @csrf
+                <input type="hidden" name="facility_id" value="{{ $facility->id }}">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="first-name-column">Pilih Penghargaan</label>
+                        <fieldset class="form-group">
+                            <select class="form-select" name="reward_category_id">
+                                @foreach ($awardCat as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </fieldset>
+                    </div>
+                    @error('reward_category_id')
+                        <strong class="alert alert-danger">{{ $message }}</strong>
+                    @enderror
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="first-name-column">Deskripsi Singkat</label>
+                        <input type="text" id="first-name-column" name="description" class="form-control" placeholder="Masukkan deskripsi" required>
+                    </div>
+                    @error('description')
+                        <strong class="alert alert-danger">{{ $message }}</strong>
+                    @enderror
+                </div>
+                <div class="col-md-3 d-grid">
+                    <button class="btn btn-primary">
+                        Tambahkan
+                    </button>
+                </div>
+            </form>
+        </div>
         <div class="card">
             <div class="card-header">
                 Daftar Fasilitas yang ada di sistem
@@ -28,46 +58,21 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Gambar</th>
-                            <th>Kategori</th>
+                            <th>Kategori Penghargaan</th>
                             <th>Deskripsi</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($facilities as $facility)
+                        @foreach ($awards as $award)
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $facility->name }}
+                                {{ $award->reward_category_name }}
                             </td>
                             <td>
-                                <img src="{{ asset('/storage/facilities/'.$facility->imageUrl) }}" alt="{{ $facility->imageUrl }}" class="rounded" style="width: 150px">
-                            </td>
-                            <td>
-                                <div class="badge bg-success">
-                                    {{ $facility->category_name }}
-                                </div>
-                            </td>
-                            <td>
-                                {{ $facility->description }}
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center justify-content-center grid gap-2">
-                                    <a href="{{ route('facility.edit', $facility->id) }}" class="btn btn-warning">
-                                        Edit
-                                    </a>
-                                    <form onsubmit="return confirm('Apakah anda yakin?')" action="{{ route('facility.destroy', $facility->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </div>
+                                {{ $award->description }}
                             </td>
                         </tr>
                         @endforeach
@@ -75,7 +80,6 @@
                 </table>
             </div>
         </div>
-
     </section>
 </div>
 @endsection

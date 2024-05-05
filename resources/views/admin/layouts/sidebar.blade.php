@@ -2,7 +2,7 @@
     <ul class="menu">
 
 
-        
+
 
         @if (Auth::check() && Auth::user()->role == 0 || Auth::user()->role == 2)
             <li class='sidebar-title'>Main Menu</li>
@@ -29,9 +29,26 @@
                     <span>Facility</span>
                 </a>
             </li>
+
+            <li class='sidebar-title'>Award Management</li>
+
+            <li class="sidebar-item {{ request()->is('admin/rewardCategory*') ? 'active' : '' }}">
+                <a href="{{ route('rewardCategory.index') }}" class='sidebar-link'>
+                    <i data-feather="award" width="20"></i>
+                    <span>Award Category</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item {{ request()->is('admin/award*') ? 'active' : '' }}">
+                <a href="{{ route('reward.index') }}" class='sidebar-link'>
+                    <i data-feather="award" width="20"></i>
+                    <span>Award</span>
+                </a>
+            </li>
         @endif
 
         @if (Auth::check() && Auth::user()->role == 0)
+            <li class='sidebar-title'>User Management</li>
             <li class="sidebar-item {{ request()->is('admin/user*') ? 'active' : '' }}">
                 <a href="{{ route('user.index') }}" class='sidebar-link'>
                     <i data-feather="user" width="20"></i>

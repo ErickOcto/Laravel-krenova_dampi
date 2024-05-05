@@ -6,23 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::table('civilians', function (Blueprint $table) {
-            $table->renameColumn('total_children', 'total_dependents');
-        });
-    }
+public function up(): void
+{
+    Schema::table('civilians', function (Blueprint $table) {
+        // Menambahkan kolom baru
+        $table->integer('total_dependents')->nullable();
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('civilians', function (Blueprint $table) {
-            $table->renameColumn('total_dependents', 'total_children');
-        });
-    }
+        // Menghapus kolom lama
+        $table->dropColumn('total_children');
+    });
+}
+
+public function down(): void
+{
+    Schema::table('civilians', function (Blueprint $table) {
+        // Menambahkan kembali kolom lama
+        $table->integer('total_children')->nullable();
+
+        // Menghapus kolom baru
+        $table->dropColumn('total_dependents');
+    });
+}
+
 };
