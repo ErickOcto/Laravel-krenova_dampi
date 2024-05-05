@@ -86,11 +86,11 @@
         <li class="sidebar-item  ">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-            </form>
             <button type="submit" class='sidebar-link border-0 bg-white'>
                 <i data-feather="user" width="20"></i>
                 <span>Logout</span>
             </button>
+            </form>
         </li>
 
     </ul>

@@ -55,9 +55,9 @@
                     <div class="card-body p-0">
                         <div class="d-flex flex-column">
                             <div class='px-3 py-3 d-flex justify-content-between'>
-                                <h3 class='card-title'> Biaya Bulan Ini</h3>
+                                <h3 class='card-title'> Bulan Ini</h3>
                                 <div class="card-right d-flex align-items-center">
-                                    <p>{{ $costMonth }}</p>
+                                    <p>Rp {{ $costMonth }}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,26 +69,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class='card-heading p-1 pl-3'>Project Cost</h3>
+                        <h3 class='card-heading p-1 pl-3'>Biaya Bulan Ini</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-12">
                                 <div class="pl-3">
-                                    <h1 class='mt-5'>Rp 100.1M</h1>
-                                    <p class='text-xs'><span class="text-green"><i
-                                                data-feather="bar-chart" width="15"></i> +19%</span>
-                                        than last month</p>
-                                    <div class="legends">
-                                        <div class="legend d-flex flex-row align-items-center">
-                                            <div class='w-3 h-3 rounded-full bg-info me-2'></div><span
-                                                class='text-xs'>Last Month</span>
-                                        </div>
-                                        <div class="legend d-flex flex-row align-items-center">
-                                            <div class='w-3 h-3 rounded-full bg-blue me-2'></div><span
-                                                class='text-xs'>Current Month</span>
-                                        </div>
-                                    </div>
+                                    <h1 class='mt-5' id="yearCost">Rp {{ $costMonth }}</h1>
+                                    <p class='fw-bold text-lg'><span class="{{ $percentages >= 0 ? 'text-green' : 'text-red' }}"><i
+                                                data-feather="bar-chart" width="30"></i>{{ $percentages >= 0 ? '+' : '' }}{{ number_format($percentages, '2', ',', '.') }}%</span>
+                                        dibanding bulan lalu</p>
                                 </div>
                             </div>
                             <div class="col-md-8 col-12">
@@ -122,19 +112,11 @@ var ctxBar = document.getElementById("bar").getContext("2d");
 var myBar = new Chart(ctxBar, {
   type: 'bar',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov",],
+    labels: {!! $labels !!},
     datasets: [{
-      label: 'Students',
+      label: 'Biaya perbulan',
       backgroundColor: [chartColors.grey, chartColors.grey, chartColors.grey, chartColors.grey, chartColors.info, chartColors.blue, chartColors.grey],
-      data: [
-        5,
-        10,
-        30,
-        40,
-        35,
-        55,
-        15,
-      ]
+      data: {!! $data !!},
     }]
   },
   options: {
