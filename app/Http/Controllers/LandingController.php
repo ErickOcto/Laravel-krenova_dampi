@@ -41,8 +41,15 @@ class LandingController extends Controller
         ->join('companies', 'companies.id', '=', 'projects.company_id')
         ->select('projects.*', 'companies.name as companyName', 'companies.imageUrl as companyImage')
         ->get();
-
-        //dd($projects);
         return view('landing.project', compact('projects'));
+    }
+
+    public function tps(){
+        $facilities = DB::table('facilities')
+        ->join('facility_categories', 'facilities.facility_category_id', '=', 'facility_categories.id')
+        ->select('facilities.*', 'facility_categories.name as category_name', 'facility_categories.iconUrl as iconUrl')
+        ->where('facility_categories.name', '=', 'tps')->orWhere('facility_categories.name', '=', 'TPS')->orWhere('facility_categories.name', '=', 'Tps')
+        ->get();
+        return view('landing.tps', compact('facilities'));
     }
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,8 @@ Route::get('/search', [LandingController::class, 'search'])->name('landing-searc
 
 Route::get('/facility', [LandingController::class, 'facilities'])->name('landing-facility');
 
+Route::get('/tps', [LandingController::class, 'tps'])->name('landing-tps');
+
 Route::get('/project', [LandingController::class, 'projects'])->name('landing-projects');
 
 Route::get('/dashboard', function () {
@@ -43,9 +46,9 @@ Route::middleware('auth')->group(function () {
 
 // Route Authenticated - User After Login
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/redirect', [RedirectController::class, 'redirectAfterLogin']);
 
     // Admin Dashboard
-
     Route::get('/admin', [DashboardController::class, 'adminDashboard'])->name('admin-dashboard');
 
     // CRUD Admin Facility Category
@@ -54,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('admin/facility', FacilityController::class);
     // CRUD Project
     Route::resource('admin/project', ProjectController::class);
+    Route::put('admin/project/updateStatus/{id}', [ProjectController::class, 'updateStatus'])->name('updateStatusProject');
     // CRUD User
     Route::resource('admin/user', UserController::class);
     //CRUD Company
@@ -64,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('admin')->group(function () {
         // Dashboard Poverty(kemiskinan)
         Route::get('admin/poverty', [AdminDashboardController::class, 'povertyDashboard'])->name('poverty-dashboard');
-    
+
         //CRUD Poverty
         Route::resource('admin/management/poverty', PovertyController::class);
     });
@@ -72,7 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Officer Dashboard
 });
 
-// Route Admin Poverty 
+// Route Admin Poverty
 
 
 require __DIR__ . '/auth.php';

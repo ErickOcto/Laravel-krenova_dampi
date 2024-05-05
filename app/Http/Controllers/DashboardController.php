@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function adminDashboard(){
         $projectOnProgress = DB::table('projects')->where('status', 'On Progress')->count();
-        $projectFinished = DB::table('projects')->where('status', 'Complete')->count();
+        $projectFinished = DB::table('projects')->where('status', 'Completed')->count();
         $cost = DB::table('projects')->sum('cost');
         $thirtyDaysAgo = Carbon::now()->subDays(30);
         $costMonth = DB::table('projects')->where('p_start', '>=', $thirtyDaysAgo)->get()->sum('cost');

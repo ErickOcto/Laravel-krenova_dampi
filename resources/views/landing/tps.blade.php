@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DAMPI</title>
+  <title>DAMPI - TPS</title>
 
     <!-- Start Style -->
     <style>
@@ -61,13 +61,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-lg-0">
             <li class="nav-item mx-3">
-              <a href="{{ route('landing-projects') }}" class="nav-link">Projek 🛠️</a>
+              <a class="nav-link" href="{{ route('landing-projects') }}" aria-current="page">Projek 🛠️</a>
             </li>
             <li class="nav-item mx-3">
-              <a href="{{ route('landing-facility') }}" class="nav-link">Fasilitas 🌏</a>
+              <a class="nav-link" href="{{ route('landing-facility') }}" aria-current="page">Fasilitas 🌏</a>
             </li>
             <li class="nav-item mx-3">
-             <a class="nav-link" href="{{ route('landing-tps') }}">TPS 🚮</a>
+              <button class="btn btn-primary" aria-current="page">TPS 🚮</button>
             </li>
           </ul>
         </div>
@@ -78,7 +78,7 @@
 
   <div id="map"></div>
 
-<!-- Modal -->
+  <!-- Modal -->
 <div class="modal fade" id="facilityModal" tabindex="-1" aria-labelledby="facilityModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -97,12 +97,10 @@
   </div>
 </div>
 
-
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
   <!-- Start Leaflet JS -->
     <script>
         var map = L.map('map').setView([-2.5489, 118.0149], 5);

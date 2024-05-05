@@ -157,4 +157,12 @@ class ProjectController extends Controller
 
         return redirect(route('project.index'));
     }
+
+    public function updateStatus($id){
+        $project = Project::findOrFail($id);
+        $project->update([
+            'status' => "Completed",
+        ]);
+        return redirect(route('project.index'));
+    }
 }

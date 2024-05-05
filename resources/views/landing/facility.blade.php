@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DAMPI</title>
+  <title>DAMPI - Fasilitas</title>
 
     <!-- Start Style -->
     <style>
@@ -40,6 +40,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
+
+    <link rel="shortcut icon" href="{{ asset('template/assets/images/dampi.svg') }}" type="image/x-icon">
 </head>
 <body>
 
@@ -65,7 +67,7 @@
               <button class="btn btn-primary" aria-current="page" type="submit">Fasilitas 🌏</button>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" aria-current="page" >TPS 🚮</a>
+              <a class="nav-link" href="{{ route('landing-tps') }}">TPS 🚮</a>
             </li>
           </ul>
         </div>
@@ -81,7 +83,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="facilityName">Modal title</h1>
+        <h1 class="modal-title fs-5" id="facilityName"></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
