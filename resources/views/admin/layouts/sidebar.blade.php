@@ -4,6 +4,18 @@
 
         <li class='sidebar-title'>Main Menu</li>
 
+        @if (Auth::check() && Auth::user()->role == 1)
+
+        <li class="sidebar-item {{ request()->is('admin/poverty') ? 'active' : '' }} ">
+            <a href="{{ route('poverty-dashboard') }}" class='sidebar-link'>
+                <i data-feather="home" width="20"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        @endif
+
+        @if (Auth::check() && Auth::user()->role == 0)
 
         <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }} ">
             <a href="{{ route('admin-dashboard') }}" class='sidebar-link'>
@@ -56,15 +68,17 @@
                 <span>Social</span>
             </a>
         </li>
+        @endif
+        @if (Auth::check() && Auth::user()->role == 1)
+            <li class='sidebar-title'>Managemen Penduduk</li>
 
-        <li class='sidebar-title'>Poverty Management</li>
-
-        <li class="sidebar-item {{ request()->is('admin/poverty*') ? 'active' : '' }}">
-            <a href="{{ route('poverty.index') }}" class='sidebar-link'>
-                <i data-feather="triangle" width="20"></i>
-                <span>Poverty</span>
-            </a>
-        </li>
+            <li class="sidebar-item {{ request()->is('admin/management/poverty*') ? 'active' : '' }}">
+                <a href="{{ route('poverty.index') }}" class='sidebar-link'>
+                    <i data-feather="triangle" width="20"></i>
+                    <span>Penduduk</span>
+                </a>
+            </li>
+        @endif
 
         <li class='sidebar-title'>Auth</li>
 
