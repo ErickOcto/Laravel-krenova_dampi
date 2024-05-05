@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="{{ asset('template/assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{ asset('template/assets/css/app.css') }}">
-    <link rel="shortcut icon" href="{{ asset('template/assets/images/favicon.svg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('template/assets/images/dampi.svg') }}" type="image/x-icon">
     @stack('add-styles')
 </head>
 
@@ -25,7 +25,7 @@
         <div id="sidebar" class='active'>
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
-                    <img src="{{ asset('template/assets/images/logo.svg') }}" alt="" srcset="">
+                    <img src="{{ asset('template/assets/images/dampi.svg') }}" alt="" srcset="">
                 </div>
                 @include('admin.layouts.sidebar')
                 <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

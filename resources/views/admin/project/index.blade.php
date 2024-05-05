@@ -90,6 +90,7 @@
                                 {{ $project->address }}
                             </td>
                             <td style="min-width: 200px">
+                                @if($project->status === "On Progress")
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">
                                     <a href="{{ route('project.edit', $project->id) }}" class="btn btn-warning">
                                         Edit
@@ -101,7 +102,29 @@
                                             Hapus
                                         </button>
                                     </form>
+                                    <form onsubmit="return confirm('Apakah anda yakin projek telah selesai?')" action="{{ route('updateStatusProject', $project->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="btn btn-success">
+                                            Selesai
+                                        </button>
+                                    </form>
                                 </div>
+                                @endif
+                                @if($project->status === "Completed")
+                                <div class="d-flex align-items-center justify-content-center grid gap-2">
+                                    <div class="text-green">
+                                        <p>Projek Ini Telah Selesai</p>
+                                    </div>
+                                </div>
+                                @endif
+                                @if($project->status === "Failed")
+                                <div class="d-flex align-items-center justify-content-center grid gap-2">
+                                    <div class="text-red">
+                                        <p>Projek Ini Telah Gagal</p>
+                                    </div>
+                                </div>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
