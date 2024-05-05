@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-    Route::middleware('admin')->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         // Dashboard Poverty(kemiskinan)
         Route::get('admin/poverty', [AdminDashboardController::class, 'povertyDashboard'])->name('poverty-dashboard');
 

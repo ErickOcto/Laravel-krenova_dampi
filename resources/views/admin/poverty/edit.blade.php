@@ -1,9 +1,8 @@
 @extends('admin.layouts.app')
 @push('add-styles')
-        <link rel="stylesheet" href="/template/assets/vendors/simple-datatables/style.css">
-    @endpush
+    <link rel="stylesheet" href="/template/assets/vendors/simple-datatables/style.css">
+@endpush
 @section('content')
-    
     <div class="main-content container-fluid">
 
         <!-- // Basic multiple Column Form section start -->
@@ -30,7 +29,7 @@
                                                 <label for="first-name-column">Nama Kepala Keluarga</label>
                                                 <input type="text" id="first-name-column" name="name"
                                                     value="{{ $poverty->name }}" class="form-control"
-                                                    placeholder="Masukkan Nama Penduduk">
+                                                    placeholder="Masukkan Nama Penduduk" required>
                                             </div>
                                             @error('name')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
@@ -42,7 +41,7 @@
                                                 <label for="first-name-column">NIK</label>
                                                 <input type="text" id="first-name-column" name="nik"
                                                     value="{{ $poverty->nik }}" class="form-control"
-                                                    placeholder="Masukkan NIK">
+                                                    placeholder="Masukkan NIK" required>
                                             </div>
                                             @error('name')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
@@ -54,7 +53,7 @@
                                                 <label for="tanggal-lahir-column">Tanggal Lahir</label>
                                                 <input type="date" id="tanggal-lahir-column" name="birth_date"
                                                     value="{{ $poverty->birth_date }}" class="form-control"
-                                                    placeholder="Masukkan Tanggal Lahir">
+                                                    placeholder="Masukkan Tanggal Lahir" required>
                                             </div>
                                             @error('tanggal_lahir')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
@@ -64,7 +63,7 @@
                                             <div class="form-group">
                                                 <label for="jenis-kelamin-column">Jenis Kelamin</label>
                                                 <fieldset class="form-group">
-                                                    <select class="form-select" name="gender">
+                                                    <select class="form-select" name="gender" required>
                                                         <option value="">Pilih..</option>
                                                         <option value="male"
                                                             {{ $poverty->gender == 'male' ? 'selected' : '' }}>Laki - Laki
@@ -112,8 +111,8 @@
                                             <div class="input-group">
                                                 <input type="number" id="first-name-column" name="total_dependents"
                                                     value="{{ $poverty->total_dependents }}" class="form-control"
-                                                    placeholder="Masukkan Jumlah Tanggungan"
-                                                    aria-describedby="basic-addon1">
+                                                    placeholder="Masukkan Jumlah Tanggungan" aria-describedby="basic-addon1"
+                                                    required>
                                                 <span class="input-group-text" id="basic-addon1">Anggota Keluarga</span>
 
                                             </div>
@@ -125,9 +124,12 @@
                                             <label for="first-name-column">Total Jumlah anggota keluarga</label>
                                             <div class="input-group">
                                                 <input type="number" id="first-name-column" name="total_familymember"
-                                                    value="{{ $poverty->total_familymember }}" class="form-control"
+                                                    value="{{ old('total_familymember', $poverty->total_familymember) }}"
+                                                    class="form-control"
                                                     placeholder="Masukkan Jumlah Seluruh Anggota Keluarga"
-                                                    aria-describedby="basic-addon1">
+                                                    aria-describedby="basic-addon1" required
+                                                    onchange="calculatePovertyStatus()"
+                                                    oninput="calculatePovertyStatus()">
                                                 <span class="input-group-text" id="basic-addon1">Anggota</span>
 
                                             </div>
@@ -140,7 +142,7 @@
                                             <div class="form-group">
                                                 <label for="status-pekerjaan-column">Status Pekerjaan</label>
                                                 <fieldset class="form-group">
-                                                    <select class="form-select" name="job_status">
+                                                    <select class="form-select" name="job_status" required>
                                                         <option value="">Pilih..</option>
                                                         <option value="freelance"
                                                             {{ $poverty->economy->job_status == 'freelance' ? 'selected' : '' }}>
@@ -166,7 +168,7 @@
                                             <div class="form-group">
                                                 <label for="kategori-pekerjaan-column">Kategori Pekerjaan</label>
                                                 <fieldset class="form-group">
-                                                    <select class="form-select" name="job_category">
+                                                    <select class="form-select" name="job_category" required>
                                                         <option value="">Pilih..</option>
                                                         <option value="wiraswasta"
                                                             {{ $poverty->economy->job_category == 'wiraswasta' ? 'selected' : '' }}>
@@ -204,6 +206,9 @@
                                                         <option value="seniman"
                                                             {{ $poverty->economy->job_category == 'seniman' ? 'selected' : '' }}>
                                                             Seniman/Artis</option>
+                                                        <option value="lainnya"
+                                                            {{ $poverty->economy->job_category == 'lainnya' ? 'selected' : '' }}>
+                                                            Lainnya</option>
                                                     </select>
                                                 </fieldset>
                                             </div>
@@ -213,15 +218,17 @@
                                         </div>
 
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-8">
                                             <label for="pendapatan-bulanan-column">Pendapatan Bulanan</label>
                                             <div class="input-group">
                                                 <input type="text" id="pendapatan-bulanan-column"
                                                     name="monthly_income"
-                                                    value="{{ number_format($poverty->economy->monthly_income, 0, ',', '.') }}"
+                                                    value="{{ number_format(old('monthly_income', $poverty->economy->monthly_income), 0, ',', '.') }}"
                                                     class="form-control"
                                                     placeholder="Masukkan Rata Rata Pendapatan Bulanan"
-                                                    aria-describedby="basic-addon1" onkeyup="formatRupiah(this)">
+                                                    aria-describedby="basic-addon1" onkeyup="formatRupiah(this)"
+                                                    onchange="calculatePovertyStatus()"
+                                                    oninput="calculatePovertyStatus()">
                                                 <span class="input-group-text" id="basic-addon1">Rp</span>
                                             </div>
                                             @error('monthly_income')
@@ -229,7 +236,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-8">
                                             <label for="pengeluaran-bulanan-column">Pengeluaran Bulanan</label>
                                             <div class="input-group">
                                                 <input type="text" id="pengeluaran-bulanan-column"
@@ -237,10 +244,35 @@
                                                     value="{{ number_format($poverty->economy->monthly_spending, 0, ',', '.') }}"
                                                     class="form-control"
                                                     placeholder="Masukkan Rata Rata Pengeluaran Bulanan"
-                                                    aria-describedby="basic-addon2" onkeyup="formatRupiah(this)">
+                                                    aria-describedby="basic-addon2" onkeyup="formatRupiah(this)" required>
                                                 <span class="input-group-text" id="basic-addon2">Rp</span>
                                             </div>
                                             @error('monthly_spending')
+                                                <strong class="alert alert-danger">{{ $message }}</strong>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-md-4 col-8">
+                                            <div class="form-group">
+                                                <label for="tanggal-lahir-column">Status Kemiskinan</label>
+                                                <fieldset class="form-group">
+                                                    <select class="form-select" name="poverty_status_1" disabled>
+                                                        <option value="">Pilih..</option>
+                                                        <option value=""
+                                                            {{ $poverty->economy->poverty_status == '0' ? 'selected' : '' }}>
+                                                            Biasa</option>
+                                                        <option value=""
+                                                            {{ $poverty->economy->poverty_status == '1' ? 'selected' : '' }}>
+                                                            Menengah</option>
+                                                        <option value=""
+                                                            {{ $poverty->economy->poverty_status == '2' ? 'selected' : '' }}>
+                                                            Ekstrem</option>
+                                                    </select>
+                                                    <input type="hidden" name="poverty_status"
+                                                        id="poverty_status_hidden">
+                                                </fieldset>
+                                            </div>
+                                            @error('poverty_status')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
                                             @enderror
                                         </div>
@@ -264,7 +296,7 @@
                                             <div class="form-group">
                                                 <label for="kondisi-rumah-column">Kondisi Rumah</label>
                                                 <fieldset class="form-group">
-                                                    <select class="form-select" name="condition">
+                                                    <select class="form-select" name="condition" required>
                                                         <option value="">Pilih..</option>
                                                         <option value="sobad"
                                                             {{ $poverty->house->condition == 'sobad' ? 'selected' : '' }}>
@@ -333,7 +365,7 @@
                                                 <label for="first-name-column">Latitude</label>
                                                 <input type="text" id="first-name-column" name="lat"
                                                     value="{{ $poverty->house->lat }}" class="form-control"
-                                                    placeholder="Masukkan Latitude">
+                                                    placeholder="Masukkan Latitude" required>
                                             </div>
                                             @error('lat')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
@@ -345,7 +377,7 @@
                                                 <label for="first-name-column">Longtitude</label>
                                                 <input type="text" id="first-name-column" name="long"
                                                     value="{{ $poverty->house->long }}" class="form-control"
-                                                    placeholder="Masukkan Longtitude">
+                                                    placeholder="Masukkan Longtitude" required>
                                             </div>
                                             @error('long')
                                                 <strong class="alert alert-danger">{{ $message }}</strong>
@@ -372,7 +404,7 @@
 @push('add-scripts')
     <script src="/template/assets/vendors/simple-datatables/simple-datatables.js"></script>
     <script src="/template/assets/js/vendors.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
@@ -392,14 +424,39 @@
             angka.value = rupiah;
         }
 
-        @if(session()->has('success'))
+        function calculatePovertyStatus() {
+            var monthlyIncome = parseInt(document.getElementById('pendapatan-bulanan-column').value.replace(/\D/g, ''));
+            var totalFamilyMember = parseInt(document.getElementById('total_familymember').value);
+
+            var gkStandard = 743084;
+
+            var gkSedang = gkStandard - (0.3 * gkStandard); // Batas untuk kategori "Sedang"
+            var gkEkstrem = gkStandard - (0.5 * gkStandard); // Batas untuk kategori "Ekstrem"
+
+            var povertyStatus = ''; // Status kemiskinan
+
+            if (monthlyIncome < gkEkstrem * totalFamilyMember) {
+                povertyStatus = '2';
+            } else if (monthlyIncome < gkSedang * totalFamilyMember) {
+                povertyStatus = '1';
+            } else {
+                povertyStatus = '0';
+            }
+
+            // Menetapkan nilai status kemiskinan ke dalam dropdown
+            document.getElementsByName('poverty_status_1')[0].value = povertyStatus;
+            document.getElementsByName('poverty_status')[0].value = povertyStatus;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            calculatePovertyStatus(); // Panggil fungsi saat halaman dimuat ulang
+        });
+        @if (session()->has('success'))
 
             toastr.success('{{ session('success') }}', 'BERHASIL!');
-
-        @elseif(session()->has('error'))
+        @elseif (session()->has('error'))
 
             toastr.error('{{ session('error') }}', 'GAGAL!');
-
         @endif
     </script>
 @endpush

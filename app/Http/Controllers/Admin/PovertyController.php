@@ -84,7 +84,6 @@ class PovertyController extends Controller
             'house_id' => $house->id,
             'economy_id' => $economy->id,
         ]);
-
         return redirect()->route('poverty.index');
     }
 
@@ -94,11 +93,11 @@ class PovertyController extends Controller
     public function show(string $id)
     {
         $poverty = DB::table('civilians')
-        ->where('civilians.id', $id) // Tambahkan 'civilians.' untuk membuat kolom 'id' menjadi tidak ambigu
-        ->join('houses', 'civilians.house_id', '=', 'houses.id')
-        ->join('economies', 'civilians.economy_id', '=', 'economies.id')
-        ->select('civilians.*', 'houses.lat as lat', 'houses.long as long', 'economies.*')
-        ->first(); // Menggunakan first() karena hanya mengambil satu record
+            ->where('civilians.id', $id) // Tambahkan 'civilians.' untuk membuat kolom 'id' menjadi tidak ambigu
+            ->join('houses', 'civilians.house_id', '=', 'houses.id')
+            ->join('economies', 'civilians.economy_id', '=', 'economies.id')
+            ->select('civilians.*', 'houses.lat as lat', 'houses.long as long', 'economies.*', 'houses.*')
+            ->first(); // Menggunakan first() karena hanya mengambil satu record
 
         return view('admin.poverty.show', compact('poverty'));
     }
@@ -147,9 +146,19 @@ class PovertyController extends Controller
         $economy->monthly_income = str_replace('.', '', $request->monthly_income);
         $economy->job_category = $request->job_category;
         $economy->monthly_spending = str_replace('.', '', $request->monthly_spending);
-        $economy->poverty_status = $request->poverty_status;
-        $economy->save();
 
+        $gkStandard = 743084;
+        $gkSedang = $gkStandard - (0.3 * $gkStandard);
+        $gkEkstrem = $gkStandard - (0.5 * $gkStandard);
+
+        if ($economy->monthly_income < $gkEkstrem * $request->total_familymember) {
+            $economy->poverty_status = 2;
+        } elseif ($economy->monthly_income < $gkSedang * $request->total_familymember) {
+            $economy->poverty_status = 1;
+        } else {
+            $economy->poverty_status = 0;
+        }        
+        $economy->save();
         return redirect()->back()->with(['success', "Berhasil Mengubah data Penduduk"]);
     }
 

@@ -30,10 +30,9 @@
     <div class="main-content container-fluid">
         <div class="page-title">
             <h3>Dashboard</h3>
-            <p class="text-subtitle text-muted">A good dashboard to display your statistics</p>
         </div>
         <section class="section">
-            
+
             <div class="col-md-12">
                 <div class="card">
 
@@ -56,8 +55,25 @@
         }).addTo(map);
 
         @foreach ($poverty as $poverty)
+            @php
+                $iconUrl = '';
+                switch ($poverty->poverty_status) {
+                    case '0':
+                        $iconUrl = asset('/storage/poverty/green.png');
+                        break;
+                    case '1':
+                        $iconUrl = asset('/storage/poverty/yellow.png');
+                        break;
+                    case '2':
+                        $iconUrl = asset('/storage/poverty/red.png');
+                        break;
+                    default:
+                        $iconUrl = asset('/storage/poverty/green.png'); // Gambar default jika status tidak terdefinisi
+                        break;
+                }
+            @endphp
             var icon = L.icon({
-                iconUrl: '{{ asset('/storage/poverty/red.png') }}',
+                iconUrl: '{{ $iconUrl }}',
                 iconSize: [38, 38],
                 iconAnchor: [19, 38],
                 popupAnchor: [0, -38]
@@ -85,10 +101,10 @@
 
             switch ('{{ $poverty->poverty_status }}') {
                 case '0':
-                    povertyLabel = 'Standar';
+                    povertyLabel = 'Biasa';
                     break;
                 case '1':
-                    povertyLabel = 'Sedang';
+                    povertyLabel = 'Menengah';
                     break;
                 case '2':
                     povertyLabel = 'Ekstrem';
@@ -99,13 +115,13 @@
             }
 
             var popupContent = '<div style="max-width: 200px;">' +
-                    '<h5 style="margin-bottom: 5px;">Informasi Penduduk</h5>' +
-                    '<p><b>Nama:</b> {{ $poverty->name }}</p>' +
-                    '<p><b>Jenis Kelamin:</b> ' + genderLabel + '</p>' +
-                    '<p><b>Pekerjaan:</b> {{ $poverty->job_category }}</p>' +
-                    '<p><b>Status Kemiskinan:</b> ' + povertyLabel + '</p>' +
-                    '<a href="https://www.google.com/maps?q={{ $poverty->lat }},{{ $poverty->long }}" target="_blank">Lihat Lokasi di Google Maps</a>' +
-                  '</div>';
+                '<h5 style="margin-bottom: 5px;">Informasi Penduduk</h5>' +
+                '<p><b>Nama:</b> {{ $poverty->name }}</p>' +
+                '<p><b>Jenis Kelamin:</b> ' + genderLabel + '</p>' +
+                '<p><b>Pekerjaan:</b> {{ $poverty->job_category }}</p>' +
+                '<p><b>Status Kemiskinan:</b> ' + povertyLabel + '</p>' +
+                '<a href="https://www.google.com/maps?q={{ $poverty->lat }},{{ $poverty->long }}" target="_blank">Lihat Lokasi di Google Maps</a>' +
+                '</div>';
 
             marker.bindTooltip('Rumah {{ $poverty->name }}').openTooltip();
             marker.bindPopup(popupContent).openPopup();
