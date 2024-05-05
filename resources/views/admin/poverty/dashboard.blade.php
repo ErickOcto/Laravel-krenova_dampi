@@ -59,16 +59,16 @@
                 $iconUrl = '';
                 switch ($poverty->poverty_status) {
                     case '0':
-                        $iconUrl = asset('/storage/poverty/green.png');
+                        $iconUrl = asset('/poverty/green.png');
                         break;
                     case '1':
-                        $iconUrl = asset('/storage/poverty/yellow.png');
+                        $iconUrl = asset('/poverty/yellow.png');
                         break;
                     case '2':
-                        $iconUrl = asset('/storage/poverty/red.png');
+                        $iconUrl = asset('/poverty/red.png');
                         break;
                     default:
-                        $iconUrl = asset('/storage/poverty/green.png'); // Gambar default jika status tidak terdefinisi
+                        $iconUrl = asset('/poverty/green.png'); // Gambar default jika status tidak terdefinisi
                         break;
                 }
             @endphp

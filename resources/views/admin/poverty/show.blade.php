@@ -151,7 +151,7 @@
 
 
         var icon = L.icon({
-            iconUrl: '{{ asset('/storage/poverty/location.png') }}',
+            iconUrl: '{{ asset('/poverty/location.png') }}',
             iconSize: [38, 38],
             iconAnchor: [19, 38],
             popupAnchor: [0, -38]
