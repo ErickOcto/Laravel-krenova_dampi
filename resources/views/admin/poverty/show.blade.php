@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
 @push('add-styles')
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <style>
         #map {
             height: 100vh;
@@ -63,26 +65,64 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <p><b>Nama:</b> {{ $poverty->name }}</p>
-                                </div>
-                                <div class="col-md-3">
                                     <p><b>NIK:</b> {{ $poverty->nik }}</p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><b>Tanggal Lahir:</b> {{ $poverty->birth_date }}</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p><b>Jenis Kelamin:</b> {{ $poverty->gender }}</p>
-                                </div>
-                                <div class="col-md-3">
+                                    <p><b>Jenis Kelamin:</b>
+                                        @if ($poverty->gender === 'male')
+                                            Laki-Laki
+                                        @elseif($poverty->gender === 'female')
+                                            Perempuan
+                                        @else
+                                            Tidak Terdefinisi
+                                        @endif
+                                    </p>
                                     <p><b>Status Menikah:</b> {{ $poverty->marriage == 1 ? 'Menikah' : 'Belum Menikah' }}</p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><b>Total Tanggungan:</b> {{ $poverty->total_dependents }} Anggota Keluarga</p>
-                                </div>
-                                <div class="col-md-3">
                                     <p><b>Jumlah Anggota Keluarga:</b> {{ $poverty->total_familymember }} Anggota Keluarga</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <hr class="mt-2">
+                    <div class="row">
+                        <div class="col">
+                            <p><b>Pekerjaan:</b> {{ $poverty->job_category }}</p>
+                            <p><b>Status Pekerjaan:</b> {{ $poverty->job_status }}</p>
+                        </div>
+                        <div class="col">
+                            <p><b>Pengeluaran Bulanan:</b> Rp.{{ number_format($poverty->monthly_spending, 0, ',', '.') }}</p>
+                            <p><b>Pemasukan Bulanan:</b> Rp.{{ number_format($poverty->monthly_income, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                    <hr class="mt-2">
+                    <div class="row">
+                        <div class="col">
+                            @php
+                                $condition = $poverty->condition;
+                                $keterangan = '';
+            
+                                if ($condition == 'sobad') {
+                                    $keterangan = 'Sangat Buruk';
+                                } elseif ($condition == 'bad') {
+                                    $keterangan = 'Buruk';
+                                } elseif ($condition == 'good') {
+                                    $keterangan = 'Bagus';
+                                } elseif ($condition == 'sogood') {
+                                    $keterangan = 'Sangat Bagus';
+                                } else {
+                                    $keterangan = 'Tidak Diketahui';
+                                }
+                            @endphp
+                            <p><b>Kondisi Rumah:</b> {{ $keterangan }}</p>
+                            <p><b>Luas Tanah:</b> {{ $poverty->wide_area }} m2</p>
+                        </div>
+                        <div class="col">
+                            <p><b>Ukuran Rumah:</b> {{ $poverty->size_house }} m2</p>
+                            <p><b>Jumlah Kamar Tidur:</b> {{ $poverty->totalbedroom }} Kamar</p>
                         </div>
                     </div>
                 </div>
@@ -101,6 +141,8 @@
 
 @push('add-scripts')
     <!-- Start Leaflet JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         var map = L.map('map').setView([-2.5489, 118.0149], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -109,7 +151,7 @@
 
 
         var icon = L.icon({
-            iconUrl: '{{ asset('/storage/poverty/red.png') }}',
+            iconUrl: '{{ asset('/poverty/location.png') }}',
             iconSize: [38, 38],
             iconAnchor: [19, 38],
             popupAnchor: [0, -38]
@@ -137,10 +179,10 @@
 
         switch ('{{ $poverty->poverty_status }}') {
             case '0':
-                povertyLabel = 'Standar';
+                povertyLabel = 'Biasa';
                 break;
             case '1':
-                povertyLabel = 'Sedang';
+                povertyLabel = 'Menengah';
                 break;
             case '2':
                 povertyLabel = 'Ekstrem';
