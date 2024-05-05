@@ -62,9 +62,10 @@
                                             <label for="first-name-column">Pilih Role</label>
                                             <fieldset class="form-group">
                                                 <select class="form-select" name="role">
-                                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Petugas</option>
-                                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Perusahaan</option>
-                                                    <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>Admin</option>
+                                                    <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>Super Admin</option>
+                                                    <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Petugas Sosial</option>
+                                                    <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Petugas Projek</option>
+                                                    <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Petugas Fasilitas</option>
                                                 </select>
                                             </fieldset>
                                         </div>
