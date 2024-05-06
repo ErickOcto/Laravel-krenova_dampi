@@ -24,6 +24,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
+                            <th>Jumlah Penghargaan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -35,6 +36,9 @@
                             </td>
                             <td>
                                 {{ $facility->name }}
+                            </td>
+                            <td>
+                                {{ $facility->award_count }} Penghargaan
                             </td>
                             <td>
                                 <div class="d-flex align-items-center justify-content-center grid gap-2">

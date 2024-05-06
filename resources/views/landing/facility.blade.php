@@ -69,6 +69,9 @@
             <li class="nav-item mx-3">
               <a class="nav-link" href="{{ route('landing-tps') }}">TPS 🚮</a>
             </li>
+            <li class="nav-item mx-3">
+             <a class="nav-link" href="{{ route('landing-rank') }}">Ranking Fasilitas 🏆</a>
+            </li>
           </ul>
         </div>
       </div>

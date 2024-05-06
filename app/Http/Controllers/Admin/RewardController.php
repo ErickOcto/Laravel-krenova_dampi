@@ -31,10 +31,20 @@ class RewardController extends Controller
     }
 
     public function reward(){
-        $facilities = DB::table('facilities')
+    $facilities = DB::table('facilities')
         ->join('facility_categories', 'facilities.facility_category_id', '=', 'facility_categories.id')
-        ->select('facilities.*', 'facility_categories.name as category_name')->get();
+        ->select('facilities.*', 'facility_categories.name as category_name')
+        ->get();
 
+    $awards = DB::table('rewards')
+        ->select('facility_id', DB::raw('COUNT(*) as award_count'))
+        ->groupBy('facility_id')
+        ->get()
+        ->keyBy('facility_id');
+
+    foreach ($facilities as $facility) {
+        $facility->award_count = $awards->has($facility->id) ? $awards[$facility->id]->award_count : 0;
+    }
         return view('admin.reward.index', compact('facilities'));
     }
 

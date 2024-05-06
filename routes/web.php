@@ -33,6 +33,8 @@ Route::get('/facility', [LandingController::class, 'facilities'])->name('landing
 
 Route::get('/tps', [LandingController::class, 'tps'])->name('landing-tps');
 
+Route::get('/rank', [LandingController::class, 'rank'])->name('landing-rank');
+
 Route::get('/project', [LandingController::class, 'projects'])->name('landing-projects');
 
 Route::get('/dashboard', function () {

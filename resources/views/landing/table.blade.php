@@ -70,7 +70,7 @@
               <a class="nav-link" href="{{ route('landing-tps') }}">TPS 🚮</a>
             </li>
             <li class="nav-item mx-3">
-             <a class="nav-link" href="{{ route('landing-rank') }}">Ranking Fasilitas 🏆</a>
+              <button class="btn btn-primary" aria-current="page" type="submit">Ranking Fasilitas 🏆</button>
             </li>
           </ul>
         </div>
@@ -79,30 +79,36 @@
   </div>
   <!-- End Navbar -->
 
-  <div id="map"></div>
+  <div class="container">
+    <div class="card table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        No
+                    </th>
+                    <th>
+                        Nama Fasilitas
+                    </th>
+                    <th>
+                        Jumlah Penghargaan
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($facilities as $facility)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $facility->name }}</td>
+                    <td>{{ $facility->award_count }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+  </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-  <!-- Start Leaflet JS -->
-    <script>
-        var map = L.map('map').setView([-2.5489, 118.0149], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        @foreach ($facilities as $facility)
-            var icon = L.icon({
-                iconUrl: '{{ asset('/storage/iconUrl/'.$facility->iconUrl) }}',
-                iconSize: [38, 38],
-                iconAnchor: [19, 38],
-                popupAnchor: [0, -38]
-            });
-
-            var marker = L.marker([{{ $facility->lat }}, {{ $facility->long }}], { icon: icon }).addTo(map);
-            marker.bindTooltip('{{ $facility->name }}').openTooltip();
-        @endforeach
-    </script>
-  <!-- End Leaflet JS -->
 </body>
 </html>
