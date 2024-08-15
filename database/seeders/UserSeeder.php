@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,13 +15,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::insert([
-            'name' => 'erick',
-            'email' => 'erick@gmail.com',
-            'password' => bcrypt('password'),
-            'ktp' => 'apalah',
+            'name' => "Beddu",
+            'email' => "beddu@gmail.com",
+            'password' => \bcrypt('password'),
             'status' => 1,
-            'role' => 1,
-            'address' => '123 Main',
+            'role' => 0,
         ]);
     }
 }

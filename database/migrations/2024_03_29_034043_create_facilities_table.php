@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('facility_category_id');
-            $table->string('lang');
+            $table->string('long');
             $table->string('lat');
             $table->longText('description');
             $table->string('imageUrl');
+            $table->foreignId('district_id')->nullable();
+            $table->foreignId('village_id')->nullable();
             $table->timestamps();
         });
     }

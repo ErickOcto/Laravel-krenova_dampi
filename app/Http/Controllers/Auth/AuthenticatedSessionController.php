@@ -29,6 +29,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (Auth::user()->role == 1) {
+            return redirect()->route('poverty-dashboard');
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
